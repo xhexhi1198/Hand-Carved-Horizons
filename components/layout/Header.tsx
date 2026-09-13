@@ -42,7 +42,17 @@ export function Header() {
           }`}
           aria-label={`${SITE_COPY.brandName} — home`}
         >
-          <Wordmark variant="mark" />
+          {/* The emblem's linework is a fixed dark tone (it's a supplied
+              raster logo, unlike the wordmark text beside it, which can
+              recolor via currentColor) — give it a light backing over the
+              transparent hero so it stays legible there too. */}
+          <span
+            className={`flex rounded-full transition-colors duration-500 ${
+              solid ? "" : "bg-canvas/85 p-1"
+            }`}
+          >
+            <Wordmark variant="mark" />
+          </span>
           <span className="hidden font-display text-lg tracking-wide sm:inline">
             {SITE_COPY.brandName}
           </span>

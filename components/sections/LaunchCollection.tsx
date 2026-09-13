@@ -22,10 +22,20 @@ export function LaunchCollection() {
         </SectionReveal>
 
         <SectionReveal delay={0.1} className="mt-16 border-t border-hairline pt-14 sm:mt-20">
-          <StaggerGroup className="flex flex-wrap justify-center gap-x-10 gap-y-6" stagger={0.03}>
-            {copy.destinations.map((destination) => (
-              <StaggerItem key={destination}>
-                <span className="cursor-default font-display text-lg uppercase tracking-[0.08em] text-ink transition-colors duration-300 hover:text-brass sm:text-xl">
+          {/* Dividers are a border on each item itself (not a separate flex
+              child), so they're always bonded to the word before them and
+              can never end up stranded alone at the start of a wrapped row —
+              the last item that fits stays on its row, border and all, and
+              the next row simply starts clean with a word. */}
+          <StaggerGroup className="flex flex-wrap justify-center gap-y-6" stagger={0.03}>
+            {copy.destinations.map((destination, index) => (
+              <StaggerItem
+                key={destination}
+                className={`px-5 sm:px-7 ${
+                  index < copy.destinations.length - 1 ? "border-r border-brass/35" : ""
+                }`}
+              >
+                <span className="cursor-default font-display text-xl font-medium uppercase tracking-[0.04em] text-ink transition-colors duration-300 hover:text-brass sm:text-2xl">
                   {destination}
                 </span>
               </StaggerItem>

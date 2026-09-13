@@ -2,13 +2,15 @@ import { Container } from "../ui/Container";
 import { SectionReveal } from "../ui/SectionReveal";
 import { StaggerGroup } from "../ui/StaggerGroup";
 import { StaggerItem } from "../ui/StaggerItem";
+import { PlaceholderImage } from "../ui/PlaceholderImage";
 import { PORTFOLIO_COPY } from "@/content/home";
 
 /**
  * The wider portfolio of partner travel brands membership unlocks access
- * to — presented as one editorial index in the site's own type system
- * (a typographic wordmark per brand) rather than a wall of external logos,
- * so it reads as part of Hand Carved Horizons rather than a page of ads.
+ * to — six equal, centred cards, each on a very light wash of that brand's
+ * own logo colour. A fixed-height logo area (logos kept uncropped via
+ * `fit="contain"`) keeps every card's name/description aligned regardless
+ * of how differently-proportioned the six logos are.
  */
 export function TravelPortfolio() {
   const copy = PORTFOLIO_COPY;
@@ -23,13 +25,27 @@ export function TravelPortfolio() {
         </SectionReveal>
 
         <StaggerGroup
-          className="mt-16 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 sm:mt-20 lg:grid-cols-3"
+          className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-3"
           stagger={0.08}
         >
           {copy.brands.map((brand) => (
-            <StaggerItem key={brand.name} className="border-t border-hairline pt-6">
-              <p className="font-display text-2xl">{brand.name}</p>
-              <p className="mt-3 text-sm text-ink-soft">{brand.description}</p>
+            <StaggerItem
+              key={brand.name}
+              className="group flex flex-col items-center rounded-2xl border border-hairline px-8 py-10 text-center shadow-[0_20px_40px_-34px_rgba(51,50,44,0.35)] transition-all duration-300 hover:-translate-y-1 hover:border-brass hover:shadow-[0_28px_48px_-30px_rgba(51,50,44,0.4)] sm:px-10"
+              style={{ background: brand.gradient }}
+            >
+              <div className="flex h-16 w-full max-w-[190px] items-center justify-center sm:h-20">
+                <PlaceholderImage
+                  alt={brand.imageAlt}
+                  src={brand.imageSrc}
+                  fit="contain"
+                  className="h-full w-full"
+                  imageClassName="transition-transform duration-700 ease-out group-hover:scale-105"
+                  sizes="190px"
+                />
+              </div>
+              <p className="mt-6 font-display text-2xl">{brand.name}</p>
+              <p className="mx-auto mt-3 max-w-[26ch] text-sm text-ink-soft">{brand.description}</p>
             </StaggerItem>
           ))}
         </StaggerGroup>

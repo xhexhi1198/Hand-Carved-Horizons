@@ -7,7 +7,6 @@ import { Container } from "../ui/Container";
 import { TextMask } from "../ui/TextMask";
 import { Button } from "../ui/Button";
 import { HERO_COPY } from "@/content/home";
-import { scrollToHashOnClick } from "@/lib/scrollToHash";
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -62,14 +61,6 @@ export function Hero() {
         <div className="mt-10 flex flex-wrap items-center gap-6">
           <Button href="/contact" className="!bg-canvas !text-ink hover:!bg-canvas/90">
             {HERO_COPY.primaryCta}
-          </Button>
-          <Button
-            href="#philosophy"
-            variant="secondary"
-            onClick={scrollToHashOnClick("#philosophy")}
-            className="!border-canvas !text-canvas hover:!text-brass hover:!border-brass"
-          >
-            {HERO_COPY.secondaryCta}
           </Button>
         </div>
       </Container>

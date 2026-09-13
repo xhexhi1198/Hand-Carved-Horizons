@@ -67,19 +67,20 @@ to find every location.
   `MEMBERSHIP_TIERS[].photography.src`.
 
 ### Logo
-The emblem in `components/ui/LogoMark.tsx` is a redrawn approximation of
-the reference logo. Swap it for the client's original vector file
-(SVG/PNG) when available.
+- [x] ~~Emblem~~ — replaced the redrawn SVG approximation with the client's
+  actual logo file, wired in at `public/images/brand/logo.png` (used by
+  `components/ui/LogoMark.tsx`, which every header/footer lockup renders
+  through) and as the browser tab icon (`app/icon.png`). Note: the artwork
+  is a fixed dark tone, unlike the old SVG which recolored via
+  `currentColor`, so the header gives it a light circular backing while
+  it's over the transparent hero — see `components/layout/Header.tsx`.
 
-### Partner brand logos (`content/home.ts` → `PORTFOLIO_COPY.brands`)
-The reference for the "Benefits Across Our Travel Portfolio" section showed
-six colour brand logos, but only as part of a flattened screenshot — no
-separate logo files were provided, and pasting that screenshot's crops in
-directly would have meant copying each brand's actual mark rather than
-using a supplied asset. Each brand is rendered as a plain text wordmark in
-the site's own serif for now (`components/sections/TravelPortfolio.tsx`).
-- [ ] Real vector logo (SVG/PNG) for each of the 6 partner brands, to
-  replace the typographic wordmark once files are supplied.
+- [x] ~~Partner brand logos~~ — the client supplied the six individual
+  transparent logo files; wired in at `public/images/portfolio/` and
+  referenced from `content/home.ts` → `PORTFOLIO_COPY.brands[].imageSrc`.
+  The section was redesigned into a 6-card grid, one per brand, each on a
+  very light wash of that brand's own logo colour
+  (`components/sections/TravelPortfolio.tsx`).
 
 ### Domain
 `app/sitemap.ts` and `app/robots.ts` use a placeholder domain

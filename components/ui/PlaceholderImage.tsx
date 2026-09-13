@@ -21,6 +21,9 @@ interface PlaceholderImageProps {
   objectPosition?: string;
   /** Extra classes on the `<Image>` itself — e.g. a hover scale transform. Ignored when `src` is absent. */
   imageClassName?: string;
+  /** "cover" (default) fills and crops the box — for photography. "contain" fits the whole
+   * image inside it undistorted and uncropped — for logos/marks with their own aspect ratio. */
+  fit?: "cover" | "contain";
 }
 
 /**
@@ -38,6 +41,7 @@ export function PlaceholderImage({
   priority = false,
   objectPosition,
   imageClassName = "",
+  fit = "cover",
 }: PlaceholderImageProps) {
   if (src) {
     return (
@@ -51,7 +55,7 @@ export function PlaceholderImage({
           fill
           sizes={sizes}
           priority={priority}
-          className={`object-cover ${imageClassName}`}
+          className={`${fit === "contain" ? "object-contain" : "object-cover"} ${imageClassName}`}
           style={objectPosition ? { objectPosition } : undefined}
         />
       </div>

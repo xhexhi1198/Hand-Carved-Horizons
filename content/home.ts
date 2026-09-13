@@ -11,7 +11,6 @@ export const HERO_COPY = {
   subhead:
     "Hand Carved Horizons is a private circle for those who believe a journey is measured by who you shared it with.",
   primaryCta: "Apply for Membership",
-  secondaryCta: "Discover the Philosophy",
   scrollHint: "Scroll to begin",
 };
 
@@ -112,9 +111,10 @@ export const LAUNCH_COLLECTION_COPY = {
 };
 
 // FINAL — client-approved
-// Partner-brand logos are not yet on file (see CONTENT_CHECKLIST.md) — each
-// brand renders as a typographic wordmark in the site's own serif until real
-// logo files are supplied.
+// Each brand's `gradient` is a very light wash — mostly the site's own
+// canvas tone, fading toward a faint hint of that brand's own logo colour
+// in one corner. Kept as CSS strings here since they're one-off, per-brand
+// values rather than sitewide design tokens.
 export const PORTFOLIO_COPY = {
   eyebrow: "Member Benefits Across Our Travel Portfolio",
   title: "One membership. A wider world of experiences.",
@@ -124,26 +124,44 @@ export const PORTFOLIO_COPY = {
     {
       name: "HarborCare Journeys",
       description: "Premium foreign travel thoughtfully designed for senior travellers.",
+      imageSrc: "/images/portfolio/harborcare.png",
+      imageAlt: "HarborCare Journeys logo",
+      gradient: "linear-gradient(135deg, var(--color-canvas-alt) 0%, var(--color-canvas-alt) 55%, rgba(15,107,99,0.12) 100%)",
     },
     {
       name: "Trails N Beyond",
       description: "Meaningful adventures created for parents and children.",
+      imageSrc: "/images/portfolio/trails-n-beyond.png",
+      imageAlt: "Trails N Beyond logo",
+      gradient: "linear-gradient(135deg, var(--color-canvas-alt) 0%, var(--color-canvas-alt) 55%, rgba(31,107,58,0.12) 100%)",
     },
     {
       name: "The Expedition Studio",
       description: "Curated road-trip and self-drive journeys for motoring enthusiasts.",
+      imageSrc: "/images/portfolio/expedition-studio.png",
+      imageAlt: "The Expedition Studio logo",
+      gradient: "linear-gradient(135deg, var(--color-canvas-alt) 0%, var(--color-canvas-alt) 55%, rgba(51,50,44,0.10) 100%)",
     },
     {
       name: "Xcursion Next",
       description: "Shared travel experiences for friend groups, communities, clubs and larger groups.",
+      imageSrc: "/images/portfolio/xcursion-next.png",
+      imageAlt: "Xcursion Next logo",
+      gradient: "linear-gradient(135deg, var(--color-canvas-alt) 0%, var(--color-canvas-alt) 55%, rgba(18,58,99,0.12) 100%)",
     },
     {
       name: "Xtreme Horizons",
       description: "Adventure travel and high-energy outdoor experiences for thrill-seekers.",
+      imageSrc: "/images/portfolio/xtreme-horizons.png",
+      imageAlt: "Xtreme Horizons logo",
+      gradient: "linear-gradient(135deg, var(--color-canvas-alt) 0%, var(--color-canvas-alt) 55%, rgba(31,122,61,0.12) 100%)",
     },
     {
       name: "The Reset Collective",
       description: "Curated retreats for professionals to disconnect, recharge and regain clarity.",
+      imageSrc: "/images/portfolio/reset-collective.png",
+      imageAlt: "The Reset Collective logo",
+      gradient: "linear-gradient(135deg, var(--color-canvas-alt) 0%, var(--color-canvas-alt) 55%, rgba(107,93,79,0.12) 100%)",
     },
   ],
   privilegesLabel: "First Circle Privileges Across All Brands",
