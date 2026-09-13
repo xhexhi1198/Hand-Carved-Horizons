@@ -1,0 +1,158 @@
+/**
+ * ALL COPY IN THIS FILE IS PLACEHOLDER except REASON_COPY,
+ * LAUNCH_COLLECTION_COPY and PORTFOLIO_COPY, which are client-approved
+ * final content. See CONTENT_CHECKLIST.md before launch.
+ */
+
+// PLACEHOLDER
+export const HERO_COPY = {
+  eyebrow: "A Private Travel Membership",
+  headlineLines: ["Some journeys", "aren't booked.", "They're carved."],
+  subhead:
+    "Hand Carved Horizons is a private circle for those who believe a journey is measured by who you shared it with.",
+  primaryCta: "Apply for Membership",
+  secondaryCta: "Discover the Philosophy",
+  scrollHint: "Scroll to begin",
+};
+
+// FINAL — client-approved
+// One merged, image-led emotional section (replaces the former separate
+// "Why We Exist" list-based section and "We Curate Relationships" philosophy
+// section). Sequence: distance → togetherness → memory.
+export const REASON_COPY = {
+  eyebrow: "Our Reason",
+  headlineLines: ["Life moves fast.", "The people who matter shouldn't feel far away."],
+  supportingCopy:
+    "Careers take us across countries. Families live in different cities. Friends get busy with life. Hand-Carved Horizons creates a reason to come together again.",
+  imageAlt:
+    "Hikers pausing at a coastal cliffside overlook to watch the sunset together",
+  imageSrc: "/images/reason/cliffside.png",
+  statement: "Because the best journeys bring us closer.",
+  closingIdeas: [
+    { title: "Time Together", description: "Life's greatest luxury" },
+    { title: "Shared Memories", description: "Moments worth returning to" },
+    { title: "Stronger Relationships", description: "The reason we travel" },
+  ],
+};
+
+// PLACEHOLDER (text) — imagery below is client-supplied and final.
+export const BENEFITS_COPY = {
+  eyebrow: "Member Privileges",
+  title: "What Membership Unlocks",
+  subhead:
+    "Beyond the journey itself, membership is a standing relationship with a team dedicated to how you travel.",
+  items: [
+    {
+      title: "Dedicated Travel Concierge",
+      description: "A single point of contact who already knows how your circle prefers to travel.",
+      imageAlt:
+        "A leather travel journal embossed with the Hand Carved Horizons monogram, beside a pen and a brass desk bell",
+      imageSrc: "/images/benefits/concierge.png",
+    },
+    {
+      title: "Curated Itineraries",
+      description: "Journeys shaped around your circle's occasions, not a fixed package.",
+      imageAlt: "A table set for two on a cliffside terrace overlooking a coastal village at dusk",
+      imageSrc: "/images/benefits/itineraries.png",
+    },
+    {
+      title: "Priority Access",
+      description: "First access to new destinations and experiences as they are introduced.",
+      imageAlt: "A traveller pulling a suitcase toward a private jet at sunset",
+      imageSrc: "/images/benefits/priority-access.png",
+    },
+    {
+      title: "Flexible Travel Credits",
+      description: "Credits that move with your circle across trips, not tied to a single booking.",
+      imageAlt: "A leather travel wallet and compass resting on a map",
+      imageSrc: "/images/benefits/travel-credits.png",
+    },
+    {
+      title: "Private Member Events",
+      description: "Gatherings for members to meet, share stories, and shape future journeys.",
+      imageAlt: "A long dining table set beneath a tree on a terrace overlooking a coastal village at dusk",
+      imageSrc: "/images/benefits/member-events.png",
+    },
+    {
+      title: "Considered Details",
+      description: "The quieter parts of a trip — arrival, pacing, privacy — handled before you ask.",
+      imageAlt: "A sunhat resting on a chair on a terrace overlooking green hills at dusk",
+      imageSrc: "/images/benefits/considered-details.png",
+    },
+  ],
+};
+
+// FINAL — client-approved
+export const LAUNCH_COLLECTION_COPY = {
+  eyebrow: "Booking Opens October 8, 2026",
+  title: "Our First Collection of Journeys",
+  subhead:
+    "Our first collection becomes available for booking from October 8, 2026 — marking the public launch of Hand Carved Horizons.",
+  destinations: [
+    "Vietnam",
+    "Thailand",
+    "Laos",
+    "Cambodia",
+    "Indonesia",
+    "Japan",
+    "Sri Lanka",
+    "Maldives",
+    "Dubai",
+    "Abu Dhabi",
+    "Qatar",
+  ],
+  advantageLabel: "First Circle Advantage — Before the Public Launch",
+  advantagePoints: [
+    "Early visibility into upcoming departures",
+    "Priority access to limited-capacity journeys",
+    "Preferred booking windows",
+    "Exclusive member pricing",
+    "Dedicated concierge assistance",
+  ],
+};
+
+// FINAL — client-approved
+// Partner-brand logos are not yet on file (see CONTENT_CHECKLIST.md) — each
+// brand renders as a typographic wordmark in the site's own serif until real
+// logo files are supplied.
+export const PORTFOLIO_COPY = {
+  eyebrow: "Member Benefits Across Our Travel Portfolio",
+  title: "One membership. A wider world of experiences.",
+  subhead:
+    "First Circle Members enjoy priority access and exclusive privileges across our portfolio of travel brands.",
+  brands: [
+    {
+      name: "HarborCare Journeys",
+      description: "Premium foreign travel thoughtfully designed for senior travellers.",
+    },
+    {
+      name: "Trails N Beyond",
+      description: "Meaningful adventures created for parents and children.",
+    },
+    {
+      name: "The Expedition Studio",
+      description: "Curated road-trip and self-drive journeys for motoring enthusiasts.",
+    },
+    {
+      name: "Xcursion Next",
+      description: "Shared travel experiences for friend groups, communities, clubs and larger groups.",
+    },
+    {
+      name: "Xtreme Horizons",
+      description: "Adventure travel and high-energy outdoor experiences for thrill-seekers.",
+    },
+    {
+      name: "The Reset Collective",
+      description: "Curated retreats for professionals to disconnect, recharge and regain clarity.",
+    },
+  ],
+  privilegesLabel: "First Circle Privileges Across All Brands",
+  privileges: [
+    "Early access",
+    "Priority booking",
+    "Preferred availability",
+    "Member-only pricing",
+    "Dedicated concierge",
+    "Special launch events",
+  ],
+};

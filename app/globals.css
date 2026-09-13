@@ -1,26 +1,128 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------
+   Hand Carved Horizons — design tokens
+   Palette, type and spacing extracted from the client's brand reference
+   (warm ivory / muted sage / charcoal ink, elegant serif + tracked sans).
+   ------------------------------------------------------------------- */
+@theme {
+  --color-canvas: #f8f4ea;
+  --color-canvas-alt: #faf7f0;
+  --color-sage: #e7ead9;
+  --color-sage-deep: #dde2cd;
+  --color-ink: #33322c;
+  --color-ink-soft: #4a493f;
+  --color-stone: #6e6c5f;
+  --color-hairline: #c9c6b6;
+  --color-brass: #b08d57;
+
+  --font-display: var(--font-cormorant), "Cormorant Garamond", serif;
+  --font-sans: var(--font-jost), "Jost", ui-sans-serif, system-ui, sans-serif;
+
+  --text-hero: clamp(2.75rem, 6vw + 1rem, 6.5rem);
+  --text-display: clamp(2.25rem, 4vw + 1rem, 4rem);
+  --text-heading: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+
+  --tracking-label: 0.14em;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+ * Tailwind v4 dropped the v3 default border color (previously `currentColor`
+ * via `border-color: theme('borderColor.DEFAULT', currentColor)`), so this
+ * restores one sitewide default — but it must live in `@layer base`. Left
+ * unlayered, an unlayered rule beats every layered utility regardless of
+ * specificity, which silently defeated every `hover:border-*` and
+ * `group-hover:border-*` utility on the site (nav arrows, buttons, the
+ * membership carousel controls, etc. all had a hover state that never
+ * visually changed the border). See the Tailwind v4 upgrade guide.
+ */
+@layer base {
+  * {
+    border-color: var(--color-hairline);
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-brass);
+  color: var(--color-canvas);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brass);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--color-ink);
+  color: var(--color-canvas);
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-sans);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+/* Subtle woven texture for placeholder image blocks — reads as an
+   intentional editorial placeholder, not a broken image. */
+.placeholder-texture {
+  background-image:
+    repeating-linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-ink) 4%, transparent) 0px,
+      color-mix(in srgb, var(--color-ink) 4%, transparent) 1px,
+      transparent 1px,
+      transparent 14px
+    );
+}
+
+/* Horizontal scroll-snap strip (Coming Soon destinations). */
+.snap-row {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.snap-row > * {
+  scroll-snap-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .snap-row {
+    scroll-snap-type: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
