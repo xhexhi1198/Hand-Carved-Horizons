@@ -1,12 +1,19 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { X } from "lucide-react";
+import { MessageCircle, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Pill } from "../ui/Pill";
+import { Button } from "../ui/Button";
 import { MembershipPricingTable } from "./MembershipPricingTable";
 import { modalBackdrop, modalPanel, modalPanelReduced } from "@/lib/motion";
-import type { MembershipTier } from "@/content/memberships";
+import {
+  MEMBERSHIP_MODAL_CTA_COPY,
+  MEMBERSHIP_PRICING_NOTE,
+  type MembershipTier,
+} from "@/content/memberships";
+import { CONTACT_INFO } from "@/content/site";
+import { buildWhatsAppHref } from "@/lib/whatsapp";
 
 /**
  * The expandable detail panel opened from a card's "Explore" CTA — carries
@@ -43,7 +50,7 @@ export function MembershipDetailModal({
     <AnimatePresence>
       {tier && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-ink/40 p-4 py-10 backdrop-blur-[2px] sm:p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-ink/40 p-4 py-6 backdrop-blur-[2px] sm:p-6"
           initial="hidden"
           animate="visible"
           exit="exit"
@@ -55,7 +62,7 @@ export function MembershipDetailModal({
             aria-modal="true"
             aria-labelledby={`membership-modal-title-${tier.id}`}
             variants={shouldReduceMotion ? modalPanelReduced : modalPanel}
-            className="relative w-full max-w-xl bg-canvas p-8 shadow-[0_40px_80px_-30px_rgba(51,50,44,0.45)] sm:p-10"
+            className="relative w-full max-w-xl bg-canvas p-6 shadow-[0_40px_80px_-30px_rgba(51,50,44,0.45)] sm:p-8"
             onClick={(event) => event.stopPropagation()}
           >
             <button
@@ -63,7 +70,7 @@ export function MembershipDetailModal({
               type="button"
               onClick={onClose}
               aria-label="Close membership details"
-              className="absolute right-5 top-5 rounded-full border border-hairline p-2 text-ink-soft transition-colors hover:border-brass hover:text-brass"
+              className="absolute right-4 top-4 rounded-full border border-hairline p-2 text-ink-soft transition-colors hover:border-brass hover:text-brass"
             >
               <X size={16} />
             </button>
@@ -78,7 +85,7 @@ export function MembershipDetailModal({
               <p className="mt-2 font-display text-lg italic text-ink-soft">{tier.shortLine}</p>
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-4 flex flex-wrap gap-3">
               {tier.eligiblePills ? (
                 tier.eligiblePills.map((pill) => <Pill key={pill}>{pill}</Pill>)
               ) : (
@@ -86,17 +93,21 @@ export function MembershipDetailModal({
               )}
             </div>
 
-            {tier.supportingCopy && <p className="mt-6 text-ink-soft">{tier.supportingCopy}</p>}
+            {tier.supportingCopy && <p className="mt-4 text-ink-soft">{tier.supportingCopy}</p>}
 
-            <div className="mt-8">
-              <MembershipPricingTable pricing={tier.pricing} />
+            <div className="mt-6">
+              <MembershipPricingTable
+                tableLabel={tier.pricingTableLabel}
+                rows={tier.pricingRows}
+                note={MEMBERSHIP_PRICING_NOTE}
+              />
             </div>
 
-            <div className="mt-10">
-              <p className="mb-4 text-xs uppercase tracking-[0.14em] text-stone">{tier.whyLabel}</p>
+            <div className="mt-6">
+              <p className="mb-3 text-xs uppercase tracking-[0.14em] text-stone">{tier.whyLabel}</p>
               <div className="divide-y divide-hairline">
                 {(tier.whyTheyChooseIt ?? ["To be confirmed"]).map((reason) => (
-                  <div key={reason} className="flex items-start gap-4 py-4">
+                  <div key={reason} className="flex items-start gap-4 py-3">
                     <span aria-hidden="true" className="mt-1 shrink-0 text-stone">
                       —
                     </span>
@@ -104,6 +115,29 @@ export function MembershipDetailModal({
                   </div>
                 ))}
               </div>
+            </div>
+
+            <div className="mt-6 flex flex-wrap items-center gap-4 border-t border-hairline pt-6">
+              <Button
+                href={buildWhatsAppHref(
+                  MEMBERSHIP_MODAL_CTA_COPY.applyMessageTemplate.replace(
+                    "{membership}",
+                    tier.whatsappName
+                  )
+                )}
+                external
+                icon={<MessageCircle size={16} />}
+              >
+                {MEMBERSHIP_MODAL_CTA_COPY.applyLabel}
+              </Button>
+              <Button
+                href={buildWhatsAppHref()}
+                external
+                variant="secondary"
+                icon={<MessageCircle size={14} />}
+              >
+                {CONTACT_INFO.whatsappLabel}
+              </Button>
             </div>
           </motion.div>
         </motion.div>

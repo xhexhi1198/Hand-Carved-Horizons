@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "../ui/Container";
-import { Wordmark } from "../ui/Wordmark";
 import { NAV_LINKS, SITE_COPY, CONTACT_INFO } from "@/content/site";
 import { scrollToHashOnClick } from "@/lib/scrollToHash";
 
@@ -10,7 +10,13 @@ export function Footer() {
   return (
     <footer className="border-t border-hairline bg-canvas-alt py-16">
       <Container className="flex flex-col items-center gap-10 text-center">
-        <Wordmark variant="full" />
+        <Image
+          src="/images/brand/logo-footer-full.png"
+          alt="Hand Carved Horizons — Muses & Memories"
+          width={1692}
+          height={1638}
+          className="h-auto w-48 sm:w-56"
+        />
 
         <nav
           aria-label="Footer"
@@ -38,7 +44,7 @@ export function Footer() {
         </div>
 
         <p className="text-xs text-stone">
-          © {new Date().getFullYear()} {SITE_COPY.legalName}. A private travel membership.
+          © {new Date().getFullYear()} {SITE_COPY.legalName}.
         </p>
       </Container>
     </footer>

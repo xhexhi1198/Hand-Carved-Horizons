@@ -11,8 +11,9 @@ destination names appear anywhere placeholder content is used.
 ## ✅ Already final (client-approved — no action needed)
 
 - **Our Reason** section (`content/home.ts` → `REASON_COPY`) — the merged, image-led section replacing the former separate "Why We Exist" and "We Curate Relationships" sections
-- **Membership pricing & copy** for all three tiers (`content/memberships.ts` → `MEMBERSHIP_TIERS`) — figures shown exactly as approved; fields marked "To be confirmed" are intentional, not missing work on our end. The membership section was redesigned into an interactive 3-card carousel (`components/membership/MembershipCarousel.tsx` + `MembershipCard.tsx`), with the fuller pricing rules and eligibility moved into an "Explore Membership" detail modal (`MembershipDetailModal.tsx`) — no pricing figures changed.
-- **Our First Collection of Journeys** section (`content/home.ts` → `LAUNCH_COLLECTION_COPY`, rendered by `components/sections/LaunchCollection.tsx`) — launch date, destination list, and First Circle advantage points, placed right after Ways to Travel.
+- **Membership pricing & copy** for all three tiers (`content/memberships.ts` → `MEMBERSHIP_TIERS`) — figures shown exactly as approved; fields marked "To be confirmed" are intentional, not missing work on our end. The membership section was redesigned into an interactive 3-card carousel (`components/membership/MembershipCarousel.tsx` + `MembershipCard.tsx`), with the fuller pricing rules and eligibility moved into an "Explore Membership" detail modal (`MembershipDetailModal.tsx`). Pricing was later replaced end-to-end with the client's official membership-options table: each tier now carries a `pricingRows` table (`MembershipPricingTable.tsx`) instead of a single founding-contribution/travel-credits pair — Student and Friends Circle show a base tier, an additional-member rate, and a maximum group size; Family now offers three plans (Essential/Preferred/Signature) instead of one price point. A shared redemption note (`MEMBERSHIP_PRICING_NOTE`) appears under every tier's table.
+- **First Circle Advantage panel** (`content/memberships.ts` → `FIRST_CIRCLE_ADVANTAGE_COPY`, rendered by `components/membership/FirstCircleAdvantage.tsx`) — the dark, brass-accented panel directly below the membership cards. Previously lived at the end of "Our First Collection of Journeys"; moved here per client request, not duplicated.
+- **Our First Collection of Journeys** section (`content/home.ts` → `LAUNCH_COLLECTION_COPY`, rendered by `components/sections/LaunchCollection.tsx`) — launch date and destination list, placed right after Ways to Travel. The "First Circle Advantage" line was removed from this section by client request.
 - **Benefits Across Our Travel Portfolio** section (`content/home.ts` → `PORTFOLIO_COPY`, rendered by `components/sections/TravelPortfolio.tsx`) — the six partner-brand names, descriptions, and privileges strip. See below re: logo files.
 
 ## ⏳ Placeholder — needs real content before launch
@@ -29,17 +30,21 @@ destination names appear anywhere placeholder content is used.
 - [x] ~~Hero photography~~ — using a licensed stock video for now (`public/video/hero.mp4`, sourced from Pexels). Swap for the client's own footage/photography when ready by replacing that file (or editing `components/sections/Hero.tsx` to point elsewhere).
 
 ### Membership section (`content/memberships.ts`)
-- [ ] Family — "Credits Per Added Member" figure
+- [x] ~~Family — "Credits Per Added Member" figure~~ — superseded: Family is now a flat 3-plan structure (Essential/Preferred/Signature), so a per-added-member rate no longer applies.
 - [ ] Student — full eligibility list (currently "To be confirmed")
-- [ ] Student — "Credits Per Added Member" figure
+- [x] ~~Student — "Credits Per Added Member" figure~~ — now given as the "Additional Student" row (₹50,000 contribution / ₹60,000 travel credits).
 - [ ] Student — "Why students choose it" list (currently "To be confirmed")
 
 ### Benefits (`content/home.ts` → `BENEFITS_COPY`)
 - [ ] All 6 benefit titles/descriptions
-- [x] ~~Benefit photography~~ — redesigned as a 3x2 grid of image + text cards
-  (`components/sections/Benefits.tsx`); real photography supplied by the
-  client and wired in at `public/images/benefits/` (concierge, itineraries,
-  priority-access, travel-credits, member-events, considered-details).
+- [x] ~~Benefit imagery~~ — redesigned as a 3x2 grid of image + text cards
+  (`components/sections/Benefits.tsx`); each card now shows a client-supplied
+  line illustration (not photography), wired in at
+  `public/images/benefits/illustrations/` (concierge, itineraries,
+  priority-access, travel-credits, member-events, considered-details),
+  rendered uncropped via `PlaceholderImage`'s `fit="contain"`. The earlier
+  photographic set at `public/images/benefits/` is no longer referenced and
+  was left on disk in case it's needed again.
 
 ### Experience Types (`content/experiences.ts` → `EXPERIENCE_TYPES_COPY`)
 - [ ] All 5 experience type titles/descriptions
@@ -69,11 +74,17 @@ to find every location.
 ### Logo
 - [x] ~~Emblem~~ — replaced the redrawn SVG approximation with the client's
   actual logo file, wired in at `public/images/brand/logo.png` (used by
-  `components/ui/LogoMark.tsx`, which every header/footer lockup renders
-  through) and as the browser tab icon (`app/icon.png`). Note: the artwork
-  is a fixed dark tone, unlike the old SVG which recolored via
-  `currentColor`, so the header gives it a light circular backing while
-  it's over the transparent hero — see `components/layout/Header.tsx`.
+  `components/ui/LogoMark.tsx`, which the footer lockup renders through) and
+  as the browser tab icon (`app/icon.png`).
+
+- [x] ~~Header emblem — light/dark variants~~ — the client later supplied
+  separate white and dark transparent PNGs specifically for the header
+  (`public/images/brand/logo-white.png`, `logo-dark.png`). The header now
+  renders both directly over the hero with no backing patch, crossfading
+  between them via `components/layout/HeaderLogo.tsx` as the bar switches
+  from transparent (white logo) to its solid scrolled state (dark logo).
+  The footer still uses the original fixed-tone `logo.png` via
+  `LogoMark.tsx`, unaffected by this change.
 
 - [x] ~~Partner brand logos~~ — the client supplied the six individual
   transparent logo files; wired in at `public/images/portfolio/` and

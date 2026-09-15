@@ -4,6 +4,7 @@ import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { NAV_LINKS, SITE_COPY } from "@/content/site";
 import { scrollToHashOnClick } from "@/lib/scrollToHash";
+import { buildWhatsAppHref } from "@/lib/whatsapp";
 import { Button } from "../ui/Button";
 
 export function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -35,7 +36,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
               </Link>
             ))}
           </nav>
-          <Button href="/contact" onClick={onClose}>
+          <Button href={buildWhatsAppHref()} external onClick={onClose}>
             {SITE_COPY.navCta}
           </Button>
         </motion.div>

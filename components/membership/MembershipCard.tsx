@@ -53,13 +53,13 @@ export function MembershipCard({
 
         <div className="mt-3 grid grid-cols-2 gap-4 border-y border-hairline py-3">
           <div>
-            <p className="font-display text-lg sm:text-xl">{tier.pricing.foundingContribution}</p>
+            <p className="font-display text-lg sm:text-xl">{tier.pricingRows[0].contribution}</p>
             <p className="mt-0.5 text-[0.6rem] uppercase tracking-[0.12em] text-stone">
               Founding Contribution
             </p>
           </div>
           <div className="border-l border-hairline pl-4">
-            <p className="font-display text-lg sm:text-xl">{tier.pricing.travelCredits}</p>
+            <p className="font-display text-lg sm:text-xl">{tier.pricingRows[0].travelCredits}</p>
             <p className="mt-0.5 text-[0.6rem] uppercase tracking-[0.12em] text-stone">
               Travel Credits
             </p>

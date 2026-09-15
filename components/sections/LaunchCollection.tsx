@@ -6,14 +6,13 @@ import { LAUNCH_COLLECTION_COPY } from "@/content/home";
 
 /**
  * The launch-date announcement: an editorial destination index (names only,
- * no photography/cards — the site's imagery budget is spent elsewhere) plus
- * a concise, scannable First Circle advantage line.
+ * no photography/cards — the site's imagery budget is spent elsewhere).
  */
 export function LaunchCollection() {
   const copy = LAUNCH_COLLECTION_COPY;
 
   return (
-    <section className="bg-canvas py-24 sm:py-32">
+    <section className="bg-canvas py-16 sm:py-20 lg:py-24">
       <Container>
         <SectionReveal className="mx-auto max-w-2xl text-center">
           <p className="text-xs uppercase tracking-[0.16em] text-stone">{copy.eyebrow}</p>
@@ -41,11 +40,6 @@ export function LaunchCollection() {
               </StaggerItem>
             ))}
           </StaggerGroup>
-        </SectionReveal>
-
-        <SectionReveal delay={0.15} className="mt-14 border border-hairline bg-sage/20 px-6 py-8 sm:mt-16 sm:px-10 sm:py-10">
-          <p className="text-xs uppercase tracking-[0.16em] text-stone">{copy.advantageLabel}</p>
-          <p className="mt-4 text-ink-soft">{copy.advantagePoints.join(" · ")}</p>
         </SectionReveal>
       </Container>
     </section>

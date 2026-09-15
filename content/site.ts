@@ -27,4 +27,8 @@ export const CONTACT_INFO = {
   whatsappHref: "https://wa.me/917074712345",
   whatsappLabel: "WhatsApp Us",
   membershipTeamLabel: "Talk to Membership Team",
+  // The default pre-filled message for every general "Apply for Membership"
+  // / "WhatsApp Us" CTA site-wide. Membership-card CTAs use their own
+  // tier-specific message instead (content/memberships.ts).
+  whatsappDefaultMessage: "Hi, I'd like to know more about Hand-Carved Horizons memberships.",
 };

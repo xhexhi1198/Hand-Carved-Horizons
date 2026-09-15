@@ -10,7 +10,7 @@ export function Benefits() {
   const copy = BENEFITS_COPY;
 
   return (
-    <section className="bg-canvas py-24 sm:py-32">
+    <section className="bg-canvas py-16 sm:py-20 lg:py-24">
       <Container>
         <SectionReveal className="mx-auto max-w-2xl text-center">
           <p className="text-xs uppercase tracking-[0.16em] text-stone">{copy.eyebrow}</p>
@@ -30,9 +30,10 @@ export function Benefits() {
               <PlaceholderImage
                 alt={item.imageAlt}
                 src={item.imageSrc}
-                className="h-28 w-20 shrink-0 rounded-md sm:h-32 sm:w-24"
+                fit="contain"
+                className="h-20 w-[4.5rem] shrink-0 sm:h-24 sm:w-[5.4rem]"
                 imageClassName="transition-transform duration-700 ease-out group-hover:scale-105"
-                sizes="120px"
+                sizes="96px"
               />
               <div>
                 <h3 className="font-display text-lg transition-colors duration-300 group-hover:text-brass sm:text-xl">

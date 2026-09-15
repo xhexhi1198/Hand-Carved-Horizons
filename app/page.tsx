@@ -14,9 +14,9 @@ export default function Home() {
       <Reason />
       <MembershipSection />
       <Benefits />
+      <TravelPortfolio />
       <ExperienceTypes />
       <LaunchCollection />
-      <TravelPortfolio />
       <ContactCTA />
     </>
   );

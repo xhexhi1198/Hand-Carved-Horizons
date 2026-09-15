@@ -6,6 +6,7 @@ import { SectionReveal } from "../ui/SectionReveal";
 import { MembershipCarousel } from "./MembershipCarousel";
 import { MembershipDetailModal } from "./MembershipDetailModal";
 import { MembershipCTA } from "./MembershipCTA";
+import { FirstCircleAdvantage } from "./FirstCircleAdvantage";
 import { MEMBERSHIP_TIERS, MEMBERSHIP_SECTION_COPY } from "@/content/memberships";
 
 /**
@@ -23,7 +24,7 @@ export function MembershipSection() {
   const [titleLine1, titleLine2] = MEMBERSHIP_SECTION_COPY.title.split(". ");
 
   return (
-    <section id="memberships" className="bg-canvas py-24 sm:py-32">
+    <section id="memberships" className="bg-canvas py-16 sm:py-20 lg:py-24">
       <Container>
         <SectionReveal className="mx-auto max-w-2xl text-center">
           <p className="text-xs uppercase tracking-[0.16em] text-stone">
@@ -43,6 +44,7 @@ export function MembershipSection() {
       </div>
 
       <Container>
+        <FirstCircleAdvantage />
         <MembershipCTA />
       </Container>
 

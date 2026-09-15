@@ -3,12 +3,13 @@ import { SectionReveal } from "../ui/SectionReveal";
 import { Button } from "../ui/Button";
 import { CONTACT_CTA_COPY } from "@/content/contact";
 import { CONTACT_INFO } from "@/content/site";
+import { buildWhatsAppHref } from "@/lib/whatsapp";
 
 export function ContactCTA() {
   const copy = CONTACT_CTA_COPY;
 
   return (
-    <section className="bg-ink py-24 text-canvas sm:py-32">
+    <section className="bg-ink py-16 text-canvas sm:py-20 lg:py-24">
       <Container className="text-center">
         <SectionReveal>
           <p className="text-xs uppercase tracking-[0.16em] text-canvas/70">{copy.eyebrow}</p>
@@ -17,7 +18,8 @@ export function ContactCTA() {
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-6">
             <Button
-              href={`mailto:${CONTACT_INFO.email}`}
+              href={buildWhatsAppHref()}
+              external
               className="!bg-canvas !text-ink hover:!bg-canvas/90"
             >
               {copy.applyLabel}

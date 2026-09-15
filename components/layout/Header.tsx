@@ -5,10 +5,11 @@ import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Container } from "../ui/Container";
-import { Wordmark } from "../ui/Wordmark";
 import { Button } from "../ui/Button";
+import { HeaderLogo } from "./HeaderLogo";
 import { NAV_LINKS, SITE_COPY } from "@/content/site";
 import { scrollToHashOnClick } from "@/lib/scrollToHash";
+import { buildWhatsAppHref } from "@/lib/whatsapp";
 import { MobileNav } from "./MobileNav";
 
 export function Header() {
@@ -34,7 +35,7 @@ export function Header() {
         solid ? "border-b border-hairline bg-canvas/90 backdrop-blur-sm" : "bg-transparent"
       }`}
     >
-      <Container className="flex items-center justify-between py-4">
+      <Container className="flex items-center justify-between py-2.5">
         <Link
           href="/"
           className={`flex items-center gap-3 transition-colors duration-500 ${
@@ -42,17 +43,7 @@ export function Header() {
           }`}
           aria-label={`${SITE_COPY.brandName} — home`}
         >
-          {/* The emblem's linework is a fixed dark tone (it's a supplied
-              raster logo, unlike the wordmark text beside it, which can
-              recolor via currentColor) — give it a light backing over the
-              transparent hero so it stays legible there too. */}
-          <span
-            className={`flex rounded-full transition-colors duration-500 ${
-              solid ? "" : "bg-canvas/85 p-1"
-            }`}
-          >
-            <Wordmark variant="mark" />
-          </span>
+          <HeaderLogo solid={solid} />
           <span className="hidden font-display text-lg tracking-wide sm:inline">
             {SITE_COPY.brandName}
           </span>
@@ -71,7 +62,7 @@ export function Header() {
               {link.label}
             </Link>
           ))}
-          <Button href="/contact" className="!px-5 !py-3">
+          <Button href={buildWhatsAppHref()} external className="!px-5 !py-3">
             {SITE_COPY.navCta}
           </Button>
         </nav>

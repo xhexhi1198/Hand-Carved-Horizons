@@ -16,7 +16,7 @@ export function TravelPortfolio() {
   const copy = PORTFOLIO_COPY;
 
   return (
-    <section className="bg-canvas py-24 sm:py-32">
+    <section className="bg-canvas py-16 sm:py-20 lg:py-24">
       <Container>
         <SectionReveal className="mx-auto max-w-2xl text-center">
           <p className="text-xs uppercase tracking-[0.16em] text-stone">{copy.eyebrow}</p>

@@ -98,10 +98,19 @@ body {
     );
 }
 
-/* Horizontal scroll-snap strip (Coming Soon destinations). */
+/* Horizontal scroll-snap strip (e.g. the Experience Types gallery). Native
+   scrollbar hidden across engines for a cleaner, premium edge-to-edge feel —
+   the row remains fully scrollable by touch/trackpad/drag, just without the
+   visible track. */
 .snap-row {
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.snap-row::-webkit-scrollbar {
+  display: none;
 }
 
 .snap-row > * {

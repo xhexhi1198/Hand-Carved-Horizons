@@ -6,6 +6,7 @@ import { PlaneDivider } from "@/components/ui/PlaneDivider";
 import { Button } from "@/components/ui/Button";
 import { CONTACT_PAGE_COPY } from "@/content/contact";
 import { CONTACT_INFO } from "@/content/site";
+import { buildWhatsAppHref } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   title: "Contact — Hand Carved Horizons",
@@ -27,7 +28,7 @@ export default function ContactPage() {
         <PlaneDivider className="my-14" />
 
         <SectionReveal className="flex flex-col items-center gap-6">
-          <Button href={CONTACT_INFO.whatsappHref} external icon={<MessageCircle size={16} />}>
+          <Button href={buildWhatsAppHref()} external icon={<MessageCircle size={16} />}>
             {CONTACT_INFO.whatsappLabel}
           </Button>
           <a

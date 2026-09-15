@@ -7,6 +7,7 @@ import { Container } from "../ui/Container";
 import { TextMask } from "../ui/TextMask";
 import { Button } from "../ui/Button";
 import { HERO_COPY } from "@/content/home";
+import { buildWhatsAppHref } from "@/lib/whatsapp";
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -59,7 +60,11 @@ export function Hero() {
         <p className="mt-8 max-w-md text-base text-canvas/85 sm:text-lg">{HERO_COPY.subhead}</p>
 
         <div className="mt-10 flex flex-wrap items-center gap-6">
-          <Button href="/contact" className="!bg-canvas !text-ink hover:!bg-canvas/90">
+          <Button
+            href={buildWhatsAppHref()}
+            external
+            className="!bg-canvas !text-ink hover:!bg-canvas/90"
+          >
             {HERO_COPY.primaryCta}
           </Button>
         </div>

@@ -6,13 +6,11 @@
  * by MembershipPricingTable / MembershipDetailModal) — never invented.
  */
 
-export interface MembershipPricing {
-  foundingContribution: string;
+/** One row of a tier's pricing table — e.g. a group-size tier or a plan level. `travelCredits` is the literal string "—" for rows that don't carry a credits figure (e.g. "Maximum Group Size"). */
+export interface MembershipPricingRow {
+  label: string;
+  contribution: string;
   travelCredits: string;
-  travelCreditsQualifier?: string;
-  expandCircle: string;
-  creditsPerAddedMember: string;
-  creditsPerAddedMemberQualifier?: string;
 }
 
 export interface MembershipPhotography {
@@ -25,12 +23,17 @@ export interface MembershipPhotography {
 export interface MembershipTier {
   id: "family" | "friendsCircle" | "student";
   title: string;
+  /** The tier's name as used in the pre-filled WhatsApp "Apply" message, e.g. "Friends Circle Membership" (the card title alone, "Friends Circle", reads awkwardly mid-sentence). */
+  whatsappName: string;
   /** Short editorial line shown directly under the title on the card. */
   shortLine: string;
   /** Small "who it's for" line shown on the card. Omitted — never invented — when not yet given. */
   forLine?: string;
   photography: MembershipPhotography;
-  pricing: MembershipPricing;
+  /** Column header for the pricing table's row-label column, e.g. "Membership Structure" or "Family Plan". */
+  pricingTableLabel: string;
+  /** The tier's full pricing table, shown in the detail modal. The card summarizes only the first row. */
+  pricingRows: MembershipPricingRow[];
   /** Exactly the headline benefits shown on the card. null → not yet approved, render "To be confirmed". */
   cardBenefits: string[] | null;
   ctaLabel: string;
@@ -46,25 +49,26 @@ export const MEMBERSHIP_TIERS: MembershipTier[] = [
   {
     id: "family",
     title: "Family Membership",
+    whatsappName: "Family Membership",
     shortLine: "Travel together, across generations.",
-    forLine: "For spouse, children, parents & parents-in-law",
+    forLine: "One membership for the entire family under a shared travel account.",
     photography: {
       alt: "A multi-generational family walking together into the sea at sunset",
       src: "/images/membership/family.png",
     },
-    pricing: {
-      foundingContribution: "₹3,00,000",
-      travelCredits: "₹3,30,000",
-      expandCircle: "₹65,000 / member",
-      creditsPerAddedMember: "To be confirmed",
-    },
+    pricingTableLabel: "Family Plan",
+    pricingRows: [
+      { label: "Essential", contribution: "₹2,00,000", travelCredits: "₹2,30,000" },
+      { label: "Preferred", contribution: "₹3,50,000", travelCredits: "₹4,10,000" },
+      { label: "Signature", contribution: "₹5,00,000", travelCredits: "₹6,00,000" },
+    ],
     cardBenefits: [
       "One shared family travel wallet",
       "Multi-generational travel",
       "Personal concierge support",
     ],
     ctaLabel: "Explore Family Membership →",
-    eligiblePills: ["Spouse", "Children", "Parents", "Parents-in-law"],
+    eligiblePills: ["Member", "Spouse", "Children", "Parents", "Parents-in-law"],
     supportingCopy:
       "All registered family members can access and utilize the travel credits under the membership account.",
     whyLabel: "Why families love it",
@@ -79,20 +83,19 @@ export const MEMBERSHIP_TIERS: MembershipTier[] = [
   {
     id: "friendsCircle",
     title: "Friends Circle",
+    whatsappName: "Friends Circle Membership",
     shortLine: "The best memories are shared.",
-    forLine: "Up to 4 members",
+    forLine: "For friends who love creating memories through travel.",
     photography: {
       alt: "A group of friends watching the sunrise together from a mountain ridge",
       src: "/images/membership/friends.png",
     },
-    pricing: {
-      foundingContribution: "₹4,00,000",
-      travelCredits: "₹4,80,000",
-      travelCreditsQualifier: "up to 4 members",
-      expandCircle: "₹1,00,000 / member",
-      creditsPerAddedMember: "₹1,20,000",
-      creditsPerAddedMemberQualifier: "max 10 members",
-    },
+    pricingTableLabel: "Membership Structure",
+    pricingRows: [
+      { label: "Founding Circle Membership", contribution: "₹3,00,000", travelCredits: "₹3,50,000" },
+      { label: "Additional Friend", contribution: "₹1,00,000", travelCredits: "₹1,15,000" },
+      { label: "Maximum Group Size", contribution: "10 Friends", travelCredits: "—" },
+    ],
     cardBenefits: [
       "One collective travel wallet",
       "Perfect for reunions & celebrations",
@@ -116,20 +119,21 @@ export const MEMBERSHIP_TIERS: MembershipTier[] = [
   {
     id: "student",
     title: "Student Membership",
+    whatsappName: "Student Membership",
     // Positioned as a more accessible entry point — never described as
     // cheap, budget, or affordable, per the client's explicit direction.
     shortLine: "A more accessible entry into the Hand Carved Horizons community.",
-    // No "for" line has been given for this tier — omitted rather than invented.
+    forLine: "For students who travel and explore together.",
     photography: {
       alt: "A group of young travellers sitting together by a forest stream, sharing a quiet moment",
       src: "/images/membership/student.png",
     },
-    pricing: {
-      foundingContribution: "₹1,50,000",
-      travelCredits: "₹2,00,000",
-      expandCircle: "₹50,000 / member",
-      creditsPerAddedMember: "To be confirmed",
-    },
+    pricingTableLabel: "Membership Structure",
+    pricingRows: [
+      { label: "Up to 5 Students", contribution: "₹1,50,000", travelCredits: "₹2,00,000" },
+      { label: "Additional Student", contribution: "₹50,000", travelCredits: "₹60,000" },
+      { label: "Maximum Group Size", contribution: "10 Students", travelCredits: "—" },
+    ],
     // Not yet approved — rendered as "To be confirmed", never invented.
     cardBenefits: null,
     ctaLabel: "Explore Student Membership →",
@@ -148,4 +152,34 @@ export const MEMBERSHIP_SECTION_COPY = {
 export const MEMBERSHIP_CTA_COPY = {
   title: "Not sure which circle is right for you?",
   body: "Speak with our membership team and we'll help you understand which membership best fits the way you travel.",
+};
+
+// FINAL — client-approved. Shown beneath every tier's pricing table in the
+// detail modal — applies identically across all three circles.
+export const MEMBERSHIP_PRICING_NOTE =
+  "Travel credits are redeemable against eligible travel services and experiences as per membership terms and conditions.";
+
+// FINAL — client-approved. The membership-specific "Apply for Membership"
+// CTA at the foot of every detail modal — the one CTA on the site whose
+// WhatsApp message names the tier. The "{membership}" token is replaced
+// with the open tier's `whatsappName`. Its "WhatsApp Us" sibling CTA reuses
+// the site-wide generic message (content/site.ts → CONTACT_INFO.whatsappDefaultMessage).
+export const MEMBERSHIP_MODAL_CTA_COPY = {
+  applyLabel: "Apply for Membership",
+  applyMessageTemplate:
+    "Hi, I'm interested in applying for the {membership} at Hand-Carved Horizons. Please share the next steps.",
+};
+
+// FINAL — client-approved. Previously the closing panel of the "Our First
+// Collection of Journeys" section (content/home.ts); moved here, directly
+// below the membership cards, per client request — not duplicated.
+export const FIRST_CIRCLE_ADVANTAGE_COPY = {
+  label: "First Circle Advantage — Before the Public Launch",
+  points: [
+    "Early visibility into upcoming departures",
+    "Priority access to limited-capacity journeys",
+    "Preferred booking windows",
+    "Exclusive member pricing",
+    "Dedicated concierge assistance",
+  ],
 };

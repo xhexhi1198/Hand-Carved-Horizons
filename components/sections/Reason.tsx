@@ -31,7 +31,7 @@ export function Reason() {
   const imageScale = useTransform(scrollYProgress, [0, 1], shouldReduceMotion ? [1, 1] : [1.1, 1]);
 
   return (
-    <section id="philosophy" className="overflow-hidden bg-canvas py-28 sm:py-36">
+    <section id="philosophy" className="overflow-hidden bg-canvas py-16 sm:py-20 lg:py-24">
       <Container>
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">

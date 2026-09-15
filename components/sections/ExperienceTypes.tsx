@@ -9,7 +9,7 @@ export function ExperienceTypes() {
   const copy = EXPERIENCE_TYPES_COPY;
 
   return (
-    <section className="bg-canvas py-24 sm:py-32">
+    <section className="bg-canvas py-16 sm:py-20 lg:py-24">
       <Container>
         <SectionReveal className="mx-auto max-w-2xl text-center">
           <p className="text-xs uppercase tracking-[0.16em] text-stone">{copy.eyebrow}</p>
@@ -17,9 +17,15 @@ export function ExperienceTypes() {
           <p className="mt-4 text-ink-soft">{copy.subhead}</p>
         </SectionReveal>
 
-        <StaggerGroup className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3" stagger={0.1}>
+        <StaggerGroup
+          className="snap-row mt-16 flex gap-6 overflow-x-auto pb-2"
+          stagger={0.1}
+        >
           {copy.items.map((item) => (
-            <StaggerItem key={item.title} className="group">
+            <StaggerItem
+              key={item.title}
+              className="group w-[72%] shrink-0 sm:w-[42%] lg:w-[300px]"
+            >
               <div className="overflow-hidden">
                 <PlaceholderImage
                   alt={item.imageAlt}
