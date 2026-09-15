@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { MembershipCard } from "./MembershipCard";
 import { MEMBERSHIP_TIERS } from "@/content/memberships";
 import { DURATION, EASE_CINEMATIC } from "@/lib/motion";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 const COUNT = MEMBERSHIP_TIERS.length;
 
@@ -13,19 +14,22 @@ const COUNT = MEMBERSHIP_TIERS.length;
  * Layered membership carousel — one card centred and in front, the other
  * two overlapping behind it on either side (no tilt: straight, vertical
  * cards throughout). Click, use the arrows, use the indicators, or swipe
- * to move between them. Card width is responsive (percentage-based), so
- * the same layered composition scales down cleanly on mobile.
+ * to move between them. Card width is responsive (percentage-based); on
+ * mobile the active card is narrower and the side offset is reduced (via
+ * useIsMobile) so both side cards stay clearly visible and tappable beside
+ * it — desktop/tablet keep their original width and offset untouched.
  */
 export function MembershipCarousel({ onExplore }: { onExplore: (tierId: string) => void }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const shouldReduceMotion = useReducedMotion();
+  const isMobile = useIsMobile();
 
   const go = (dir: 1 | -1) => setActiveIndex((current) => (current + dir + COUNT) % COUNT);
 
   return (
     <div className="w-full">
       <div className="w-full overflow-x-hidden py-4">
-        <div className="relative mx-auto grid w-[85%] max-w-[380px] sm:max-w-[400px] lg:max-w-[440px]">
+        <div className="relative mx-auto grid w-[72%] max-w-[300px] sm:w-[85%] sm:max-w-[400px] lg:max-w-[440px]">
           {MEMBERSHIP_TIERS.map((tier, index) => {
             // Shortest signed distance around the 3-item circle: -1, 0, or 1.
             let distance = index - activeIndex;
@@ -40,7 +44,7 @@ export function MembershipCarousel({ onExplore }: { onExplore: (tierId: string) 
                 className="relative col-start-1 row-start-1"
                 style={{ zIndex: isActive ? 3 : 1 }}
                 animate={{
-                  x: shouldReduceMotion ? 0 : `${distance * 68}%`,
+                  x: shouldReduceMotion ? 0 : `${distance * (isMobile ? 44 : 68)}%`,
                   scale: isActive ? 1 : 0.94,
                   opacity: distance === 0 ? 1 : 0.87,
                 }}
