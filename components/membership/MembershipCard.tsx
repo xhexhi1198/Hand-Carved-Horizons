@@ -95,7 +95,10 @@ export function MembershipCard({
             tabIndex={isActive ? 0 : -1}
             className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-[0.68rem] uppercase tracking-[0.14em] text-canvas transition-colors duration-300 hover:bg-ink-soft sm:text-xs"
           >
-            {tier.ctaLabel}
+            {/* Arrow hidden on mobile only — sm+ (tablet/desktop) keeps the
+                exact original "Explore X →" label untouched. */}
+            {tier.ctaLabel.replace(/\s*→\s*$/, "")}
+            <span className="hidden sm:inline"> →</span>
           </button>
         </motion.div>
       </div>
