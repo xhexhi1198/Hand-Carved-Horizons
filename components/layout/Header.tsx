@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Container } from "../ui/Container";
@@ -10,6 +11,7 @@ import { HeaderLogo } from "./HeaderLogo";
 import { NAV_LINKS, SITE_COPY } from "@/content/site";
 import { scrollToHashOnClick } from "@/lib/scrollToHash";
 import { buildWhatsAppHref } from "@/lib/whatsapp";
+import { DURATION, EASE_CINEMATIC } from "@/lib/motion";
 import { MobileNav } from "./MobileNav";
 
 export function Header() {
@@ -28,6 +30,7 @@ export function Header() {
   // Only the home page starts with a dark hero behind a transparent header —
   // every other route (and the home page once scrolled) gets the solid bar.
   const solid = !isHome || scrolled;
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <header
@@ -69,12 +72,38 @@ export function Header() {
 
         <button
           type="button"
-          className={`transition-colors duration-500 md:hidden ${solid ? "text-ink" : "text-canvas"}`}
+          className={`relative z-50 grid h-6 w-6 place-items-center transition-colors duration-500 md:hidden ${
+            solid || mobileOpen ? "text-ink" : "text-canvas"
+          }`}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((v) => !v)}
         >
-          {mobileOpen ? <X /> : <Menu />}
+          <AnimatePresence mode="wait" initial={false}>
+            {mobileOpen ? (
+              <motion.span
+                key="close"
+                className="absolute inset-0 grid place-items-center"
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, rotate: -45 }}
+                animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, rotate: 0 }}
+                exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, rotate: 45 }}
+                transition={{ duration: DURATION.fast, ease: EASE_CINEMATIC }}
+              >
+                <X />
+              </motion.span>
+            ) : (
+              <motion.span
+                key="menu"
+                className="absolute inset-0 grid place-items-center"
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, rotate: 45 }}
+                animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, rotate: 0 }}
+                exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, rotate: -45 }}
+                transition={{ duration: DURATION.fast, ease: EASE_CINEMATIC }}
+              >
+                <Menu />
+              </motion.span>
+            )}
+          </AnimatePresence>
         </button>
       </Container>
 
