@@ -61,13 +61,16 @@ To swap in real photography, pass a `src` prop where the component is used —
 no layout changes are needed. Search the codebase for `<PlaceholderImage`
 to find every location.
 
-- [x] ~~Our Reason section photo~~ — the client-supplied cliffside/sunset photo
-  is wired in at `public/images/reason/cliffside.png`, referenced from
-  `content/home.ts` → `REASON_COPY.imageSrc`.
+- [x] ~~Our Reason section photo~~ — the client-supplied harbor-bay photo is
+  wired in at `public/images/reason/harbor-bay.png`, referenced from
+  `content/home.ts` → `REASON_COPY.imageSrc`. (The earlier cliffside photo at
+  `public/images/reason/cliffside.png` is no longer referenced and was left
+  on disk.)
 
 - [x] ~~Membership card photography~~ — real photography supplied by the
-  client and wired in: `public/images/membership/family.png` (Family),
-  `friends.png` (Friends Circle, mountain-ridge sunrise), `student.png`
+  client and wired in: `public/images/membership/family.png` (Family,
+  poolside forest resort), `friends.png` (Friends Circle, kayaking among
+  limestone karst islands), `student.png`
   (Student, forest stream). Referenced from `content/memberships.ts` →
   `MEMBERSHIP_TIERS[].photography.src`.
 

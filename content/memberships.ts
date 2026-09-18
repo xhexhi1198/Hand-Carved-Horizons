@@ -53,7 +53,7 @@ export const MEMBERSHIP_TIERS: MembershipTier[] = [
     shortLine: "Travel together, across generations.",
     forLine: "One membership for the entire family under a shared travel account.",
     photography: {
-      alt: "A multi-generational family walking together into the sea at sunset",
+      alt: "An extended family relaxing together by a poolside bamboo pavilion in a forest resort",
       src: "/images/membership/family.png",
     },
     pricingTableLabel: "Family Plan",
@@ -87,7 +87,7 @@ export const MEMBERSHIP_TIERS: MembershipTier[] = [
     shortLine: "The best memories are shared.",
     forLine: "For friends who love creating memories through travel.",
     photography: {
-      alt: "A group of friends watching the sunrise together from a mountain ridge",
+      alt: "Two friends kayaking together through limestone karst islands at golden hour",
       src: "/images/membership/friends.png",
     },
     pricingTableLabel: "Membership Structure",
@@ -125,7 +125,7 @@ export const MEMBERSHIP_TIERS: MembershipTier[] = [
     shortLine: "A more accessible entry into the Hand Carved Horizons community.",
     forLine: "For students who travel and explore together.",
     photography: {
-      alt: "A group of young travellers sitting together by a forest stream, sharing a quiet moment",
+      alt: "A group of young travellers gathered on a balcony overlooking a coastal town at sunset",
       src: "/images/membership/student.png",
     },
     pricingTableLabel: "Membership Structure",

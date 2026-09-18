@@ -10,33 +10,31 @@ export const EXPERIENCE_TYPES_COPY = {
       title: "Multi-Generational Journeys",
       description: "Pacing and privacy considered for every age travelling together.",
       imageSrc: "/images/experiences/multi-generational-journeys.png",
-      imageAlt:
-        "Grandparents and their grandchild watching a paraglider together on a coastal path at sunset",
+      imageAlt: "Two travellers watching the sunset together from the deck of a boat",
     },
     {
       title: "Reunion Escapes",
       description: "Bringing scattered friends or family back into the same room, and the same story.",
       imageSrc: "/images/experiences/reunion-escapes.png",
-      imageAlt:
-        "A group of friends with their arms around each other looking out over mountain peaks at sunset",
+      imageAlt: "A group of friends harnessed together on a treetop adventure course",
     },
     {
       title: "Milestone Celebrations",
       description: "Birthdays, anniversaries, and retirements marked somewhere worth remembering.",
       imageSrc: "/images/experiences/milestone-celebrations.png",
-      imageAlt: "Family and friends gathered for an outdoor dinner under string lights in the forest",
+      imageAlt: "An extended group gathered around a long table for an outdoor meal beneath the trees",
     },
     {
       title: "Private Group Retreats",
       description: "For travel clubs, social circles, and business partners who travel as one.",
       imageSrc: "/images/experiences/private-group-retreats.png",
-      imageAlt: "A group dining together on a candlelit terrace overlooking a coastal town at night",
+      imageAlt: "A private boat moored beneath overhanging trees on a calm lagoon at sunset",
     },
     {
       title: "Quiet Getaways",
       description: "Slower journeys for two, built around presence rather than a checklist.",
       imageSrc: "/images/experiences/quiet-getaways.png",
-      imageAlt: "A parent and child walking quietly together along a sunlit forest path",
+      imageAlt: "A lone traveller walking along a quiet, rocky shoreline at sunset",
     },
   ],
 };

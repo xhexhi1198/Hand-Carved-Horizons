@@ -24,8 +24,8 @@ export const REASON_COPY = {
   supportingCopy:
     "Careers take us across countries. Families live in different cities. Friends get busy with life. Hand-Carved Horizons creates a reason to come together again.",
   imageAlt:
-    "Hikers pausing at a coastal cliffside overlook to watch the sunset together",
-  imageSrc: "/images/reason/cliffside.png",
+    "Traditional cruise boats gathered on the calm water of a mountainous bay at golden hour",
+  imageSrc: "/images/reason/harbor-bay.png",
   statement: "Because the best journeys bring us closer.",
   closingIdeas: [
     { title: "Time Together", description: "Life's greatest luxury" },
