@@ -125,8 +125,8 @@ export const MEMBERSHIP_TIERS: MembershipTier[] = [
     shortLine: "A more accessible entry into the Hand Carved Horizons community.",
     forLine: "For students who travel and explore together.",
     photography: {
-      alt: "A group of young travellers gathered on a balcony overlooking a coastal town at sunset",
-      src: "/images/membership/student.png",
+      alt: "A group of young travellers sitting together in a lively outdoor crowd, sharing the moment",
+      src: "/images/membership/student.jpg",
     },
     pricingTableLabel: "Membership Structure",
     pricingRows: [
