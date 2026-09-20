@@ -126,7 +126,7 @@ export const MEMBERSHIP_TIERS: MembershipTier[] = [
     forLine: "For students who travel and explore together.",
     photography: {
       alt: "A group of young travellers sitting together in a lively outdoor crowd, sharing the moment",
-      src: "/images/membership/student.jpg",
+      src: "/images/membership/student.png",
     },
     pricingTableLabel: "Membership Structure",
     pricingRows: [
