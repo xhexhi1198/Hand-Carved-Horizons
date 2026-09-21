@@ -245,7 +245,7 @@ export function MembersTable({
                   }
                   compact
                 />
-                <div className="grid grid-cols-2 gap-x-3 gap-y-3">
+                <div className="grid grid-cols-2 gap-x-4 gap-y-3">
                   {restFields.map((field, i) => {
                     const required = MEMBER_REQUIRED_KEYS.includes(field.key);
                     const value = member.values[field.key] ?? "";
@@ -263,6 +263,14 @@ export function MembersTable({
                         error={isTouched ? fieldError(field, value, required) : undefined}
                         options={field.options}
                         compact
+                        // Paired fields (e.g. Relationship's <select> next to
+                        // Date of Birth's native <input type="date">) can
+                        // render at different intrinsic heights depending on
+                        // the browser's own control chrome — force them to
+                        // match so labels, inputs, and underlines all sit on
+                        // the same lines. The lone full-width field doesn't
+                        // need it.
+                        inputClassName={!isLastOdd ? "h-9" : undefined}
                         className={isLastOdd ? "col-span-2" : undefined}
                       />
                     );
