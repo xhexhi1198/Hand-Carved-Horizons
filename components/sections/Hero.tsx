@@ -21,6 +21,12 @@ export function Hero() {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+    // Some in-app browsers (e.g. WhatsApp's) don't reliably honor the
+    // `muted` JSX attribute before playback starts, so autoplay gets
+    // blocked and the browser falls back to its own "tap to play" affordance
+    // — a big play icon over the video. Setting the DOM property directly
+    // is the standard fix.
+    video.muted = true;
     if (shouldReduceMotion) {
       video.pause();
     } else {
@@ -33,12 +39,16 @@ export function Hero() {
       <motion.div className="absolute inset-0 bg-ink" style={{ scale }}>
         <video
           ref={videoRef}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover pointer-events-none"
           autoPlay
           muted
           loop
           playsInline
+          controls={false}
+          disablePictureInPicture
+          disableRemotePlayback
           preload="auto"
+          tabIndex={-1}
           aria-hidden="true"
         >
           <source src="/video/hero.mp4" type="video/mp4" />
