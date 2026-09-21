@@ -23,8 +23,6 @@ export function FormField({
   /** Keeps the label for screen readers (a table column header carries it visually instead) and tightens the field's own spacing/size for a compact row. */
   hideLabel = false,
   compact = false,
-  /** Extra classes on the input/select itself (not the wrapper) — e.g. a fixed height so a native date input can't render taller than a neighbouring select. Empty by default, so no existing call site is affected unless it opts in. */
-  inputClassName = "",
 }: {
   label: string;
   type?: ApplicationFieldType;
@@ -38,15 +36,12 @@ export function FormField({
   className?: string;
   hideLabel?: boolean;
   compact?: boolean;
-  inputClassName?: string;
 }) {
   const id = useId();
   const errorId = `${id}-error`;
-  const fieldClasses = `${
-    compact
-      ? "w-full border-0 border-b border-hairline bg-transparent py-1.5 font-sans text-sm text-ink outline-none transition-colors duration-300 focus:border-brass"
-      : "mt-2 w-full border-0 border-b border-hairline bg-transparent py-2 font-display text-lg text-ink outline-none transition-colors duration-300 focus:border-brass"
-  } ${inputClassName}`;
+  const fieldClasses = compact
+    ? "w-full border-0 border-b border-hairline bg-transparent py-1.5 font-sans text-sm text-ink outline-none transition-colors duration-300 focus:border-brass"
+    : "mt-2 w-full border-0 border-b border-hairline bg-transparent py-2 font-display text-lg text-ink outline-none transition-colors duration-300 focus:border-brass";
 
   return (
     <div className={className}>

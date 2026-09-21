@@ -11,6 +11,7 @@ import {
   type ApplicationFieldConfig,
 } from "@/content/application";
 import { FormField } from "../ui/FormField";
+import { MobileNativeField } from "./MobileNativeField";
 import { fieldError } from "./validation";
 import type { MemberEntry } from "./types";
 
@@ -251,6 +252,30 @@ export function MembersTable({
                     const value = member.values[field.key] ?? "";
                     const isTouched = touched[member.id]?.[field.key];
                     const isLastOdd = restFields.length % 2 === 1 && i === restFields.length - 1;
+                    const fieldError_ = isTouched ? fieldError(field, value, required) : undefined;
+
+                    // Relationship (select) + Date of Birth (native date
+                    // input) render at meaningfully different intrinsic
+                    // heights on real iOS Safari — a fixed CSS height on the
+                    // native controls themselves doesn't reliably fix that.
+                    // This dedicated field owns its own wrapper height and
+                    // underline instead of trusting either native control.
+                    if (field.type === "select" || field.type === "date") {
+                      return (
+                        <MobileNativeField
+                          key={field.key}
+                          label={field.label}
+                          type={field.type}
+                          value={value}
+                          onChange={(next) => onChange(member.id, field.key, next)}
+                          onBlur={() => onBlur(member.id, field.key)}
+                          options={field.options}
+                          error={fieldError_}
+                          className={isLastOdd ? "col-span-2" : undefined}
+                        />
+                      );
+                    }
+
                     return (
                       <FormField
                         key={field.key}
@@ -260,17 +285,9 @@ export function MembersTable({
                         onChange={(next) => onChange(member.id, field.key, next)}
                         onBlur={() => onBlur(member.id, field.key)}
                         required={required}
-                        error={isTouched ? fieldError(field, value, required) : undefined}
+                        error={fieldError_}
                         options={field.options}
                         compact
-                        // Paired fields (e.g. Relationship's <select> next to
-                        // Date of Birth's native <input type="date">) can
-                        // render at different intrinsic heights depending on
-                        // the browser's own control chrome — force them to
-                        // match so labels, inputs, and underlines all sit on
-                        // the same lines. The lone full-width field doesn't
-                        // need it.
-                        inputClassName={!isLastOdd ? "h-9" : undefined}
                         className={isLastOdd ? "col-span-2" : undefined}
                       />
                     );
