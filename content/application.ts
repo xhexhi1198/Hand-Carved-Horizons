@@ -104,8 +104,12 @@ export const APPLICATION_COPY = {
     detailsLabel: "Your Details",
     membersLabel: "Members",
     membersSubhead: "Add the people included in this membership.",
+    memberLabel: "Member",
     addAnotherLabel: "Add Another Member",
     removeLabel: "Remove",
+    // Mobile accordion only — a collapsed member with no name yet, so it's
+    // obviously not just "empty" but something to go back and finish.
+    memberIncompleteHint: "Tap Edit to complete",
     reviewCta: "Review Application",
   },
   reviewStep: {
