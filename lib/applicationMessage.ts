@@ -1,5 +1,6 @@
 import type { MembershipTier } from "@/content/memberships";
 import { APPLICANT_FIELDS, MEMBER_FIELDS } from "@/content/application";
+import { isMemberRowEmpty } from "@/components/application/validation";
 import type { ApplicationState } from "@/components/application/types";
 
 /** The pricing row currently in play — the tier's first row, or the chosen plan for Family. */
@@ -32,12 +33,15 @@ export function buildApplicationText(tier: MembershipTier, state: ApplicationSta
     `Travel Credits: ${pricing.travelCredits}`,
     "",
     "Applicant:",
-    ...applicantFields.map((field) => `${field.label}: ${state.applicant[field.key] || "—"}`),
+    ...applicantFields
+      .filter((field) => (state.applicant[field.key] ?? "").trim() !== "")
+      .map((field) => `${field.label}: ${state.applicant[field.key]}`),
   ];
 
-  if (state.members.length > 0) {
+  const filledMembers = state.members.filter((member) => !isMemberRowEmpty(member));
+  if (filledMembers.length > 0) {
     lines.push("", "Members:");
-    state.members.forEach((member, index) => {
+    filledMembers.forEach((member, index) => {
       const nameField = memberFields[0];
       const rest = memberFields
         .slice(1)

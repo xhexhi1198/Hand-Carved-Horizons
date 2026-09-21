@@ -17,36 +17,32 @@ export interface ApplicationFieldConfig {
   options?: string[];
 }
 
-// The primary applicant's own details — step 1.
+// The primary applicant's own details, shown on the single application step.
+// Kept deliberately minimal — only what HCH needs to follow up.
 export const APPLICANT_FIELDS: Record<MembershipTierId, ApplicationFieldConfig[]> = {
   student: [
     { key: "fullName", label: "Full Name", type: "text", autoComplete: "name" },
-    { key: "institution", label: "Institution / College", type: "text" },
     { key: "mobile", label: "Mobile Number", type: "tel", autoComplete: "tel" },
     { key: "email", label: "Email Address", type: "email", autoComplete: "email" },
-    { key: "city", label: "City", type: "text", autoComplete: "address-level2" },
+    { key: "institution", label: "Institution / College", type: "text" },
   ],
   friendsCircle: [
     { key: "fullName", label: "Full Name", type: "text", autoComplete: "name" },
     { key: "mobile", label: "Mobile Number", type: "tel", autoComplete: "tel" },
     { key: "email", label: "Email Address", type: "email", autoComplete: "email" },
-    { key: "city", label: "City", type: "text", autoComplete: "address-level2" },
   ],
   family: [
     { key: "fullName", label: "Full Name", type: "text", autoComplete: "name" },
     { key: "mobile", label: "Mobile Number", type: "tel", autoComplete: "tel" },
     { key: "email", label: "Email Address", type: "email", autoComplete: "email" },
-    { key: "city", label: "City", type: "text", autoComplete: "address-level2" },
   ],
 };
 
-// Every field is required except a member's own email/institution, which stay
-// optional — the applicant's own contact details are what HCH actually needs
-// to follow up on the application.
+// Name, mobile, email only — Institution is a nice-to-have, never required.
 export const APPLICANT_REQUIRED_KEYS: Record<MembershipTierId, string[]> = {
-  student: ["fullName", "institution", "mobile", "email", "city"],
-  friendsCircle: ["fullName", "mobile", "email", "city"],
-  family: ["fullName", "mobile", "email", "city"],
+  student: ["fullName", "mobile", "email"],
+  friendsCircle: ["fullName", "mobile", "email"],
+  family: ["fullName", "mobile", "email"],
 };
 
 // One added member's details — step 2. Family's "Relationship" options come
@@ -102,21 +98,19 @@ export const MEMBER_ADD_RULES: Partial<Record<MembershipTierId, MemberAddRules>>
 
 export const APPLICATION_COPY = {
   eyebrow: "Application for Membership",
-  steps: ["Your Details", "Members", "Review"],
-  yourDetailsStep: {
-    familyPlanLabel: "Choose Your Plan",
-  },
-  membersStep: {
-    title: "Members",
-    subhead: "Add the people who will be part of your membership.",
-    addLabel: "Add Member",
+  steps: ["Application", "Review & Send"],
+  applicationStep: {
+    planLabel: "Choose Your Plan",
+    detailsLabel: "Your Details",
+    membersLabel: "Members",
+    membersSubhead: "Add the people included in this membership.",
     addAnotherLabel: "Add Another Member",
     removeLabel: "Remove",
-    emptyHint: "No members added yet — you can add them now, or later with your membership team.",
+    reviewCta: "Review Application",
   },
   reviewStep: {
-    membershipLabel: "Your Membership",
-    applicantLabel: "Primary Applicant",
+    title: "Application Summary",
+    detailsLabel: "Your Details",
     membersLabel: "Members",
     editLabel: "Edit",
     contributionLabel: "Contribution",
@@ -125,12 +119,11 @@ export const APPLICATION_COPY = {
     termsLinkLabel: "Membership Terms & Conditions",
   },
   submit: {
-    whatsappLabel: "Send via WhatsApp",
-    emailLabel: "Send via Email",
+    sendLabel: "Send Application",
+    emailAlternativeLabel: "Prefer email instead",
   },
   nav: {
     back: "Back",
-    next: "Continue",
   },
   closeConfirm: {
     message: "Discard this application? The details you've entered will be lost.",

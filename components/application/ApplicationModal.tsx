@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Mail, MessageCircle, X } from "lucide-react";
+import { X } from "lucide-react";
 import type { MembershipTier } from "@/content/memberships";
 import { APPLICANT_REQUIRED_KEYS, APPLICATION_COPY } from "@/content/application";
 import { modalBackdrop, modalPanel, modalPanelReduced } from "@/lib/motion";
@@ -10,13 +10,13 @@ import { buildWhatsAppHref } from "@/lib/whatsapp";
 import { buildApplicationEmailSubject, buildApplicationText, selectedPricingRow } from "@/lib/applicationMessage";
 import { sendApplicationEmail } from "@/lib/applicationEmail";
 import { ApplicationStepIndicator } from "./ApplicationStepIndicator";
-import { StepYourDetails } from "./StepYourDetails";
-import { StepMembers } from "./StepMembers";
+import { StepApplication } from "./StepApplication";
 import { StepReview } from "./StepReview";
 import { TermsPanel } from "./TermsPanel";
+import { isMemberRowEmpty } from "./validation";
 import type { ApplicationState, FieldValues, MemberEntry } from "./types";
 
-const STEP_COUNT = 3;
+const STEP_COUNT = 2;
 
 function makeId() {
   return typeof crypto !== "undefined" && "randomUUID" in crypto
@@ -51,7 +51,9 @@ function ApplicationModalPanel({ tier, onClose }: { tier: MembershipTier; onClos
   const [step, setStep] = useState(0);
   const [familyPlanId, setFamilyPlanId] = useState<string | null>(null);
   const [applicant, setApplicant] = useState<FieldValues>({});
-  const [members, setMembers] = useState<MemberEntry[]>([]);
+  // One empty row is already on screen when the step opens — reduces the
+  // "+ Add Another Member" flow to a single click per additional person.
+  const [members, setMembers] = useState<MemberEntry[]>([{ id: makeId(), values: {} }]);
   const [touchedApplicant, setTouchedApplicant] = useState<Record<string, boolean>>({});
   const [touchedMembers, setTouchedMembers] = useState<Record<string, Record<string, boolean>>>({});
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -62,7 +64,7 @@ function ApplicationModalPanel({ tier, onClose }: { tier: MembershipTier; onClos
 
   const hasData =
     Object.values(applicant).some((value) => value.trim() !== "") ||
-    members.length > 0 ||
+    members.some((member) => !isMemberRowEmpty(member)) ||
     familyPlanId !== null;
 
   function requestClose() {
@@ -95,10 +97,15 @@ function ApplicationModalPanel({ tier, onClose }: { tier: MembershipTier; onClos
   }, [showTermsPanel, hasData]);
 
   const requiredApplicantKeys = APPLICANT_REQUIRED_KEYS[tier.id];
-  const step0Valid =
-    (tier.id !== "family" || !!familyPlanId) &&
-    requiredApplicantKeys.every((key) => (applicant[key] ?? "").trim() !== "");
-  const step1Valid = members.every((member) => (member.values.name ?? "").trim() !== "");
+  const planValid = tier.id !== "family" || !!familyPlanId;
+  const applicantValid = requiredApplicantKeys.every((key) => (applicant[key] ?? "").trim() !== "");
+  // A blank starting/added row is fine (simply omitted from review and
+  // submission) — only a *partially* filled row without a name blocks
+  // progress, so the user doesn't accidentally submit a nameless member.
+  const membersValid = members.every(
+    (member) => isMemberRowEmpty(member) || (member.values.name ?? "").trim() !== ""
+  );
+  const applicationStepValid = planValid && applicantValid && membersValid;
 
   function goNext() {
     setStep((current) => Math.min(current + 1, STEP_COUNT - 1));
@@ -226,32 +233,27 @@ function ApplicationModalPanel({ tier, onClose }: { tier: MembershipTier; onClos
 
               <div className="flex-1 overflow-y-auto overscroll-contain px-6 py-6 sm:px-10 sm:py-8">
                 {step === 0 && (
-                  <StepYourDetails
+                  <StepApplication
                     tier={tier}
                     familyPlanId={familyPlanId}
                     onSelectFamilyPlan={setFamilyPlanId}
                     applicant={applicant}
-                    touched={touchedApplicant}
-                    onChange={setApplicantField}
-                    onBlur={touchApplicantField}
+                    touchedApplicant={touchedApplicant}
+                    onChangeApplicant={setApplicantField}
+                    onBlurApplicant={touchApplicantField}
+                    members={members}
+                    touchedMembers={touchedMembers}
+                    onAddMember={addMember}
+                    onRemoveMember={removeMember}
+                    onChangeMember={setMemberField}
+                    onBlurMember={touchMemberField}
                   />
                 )}
                 {step === 1 && (
-                  <StepMembers
-                    tier={tier}
-                    members={members}
-                    touched={touchedMembers}
-                    onAdd={addMember}
-                    onRemove={removeMember}
-                    onChange={setMemberField}
-                    onBlur={touchMemberField}
-                  />
-                )}
-                {step === 2 && (
                   <StepReview
                     tier={tier}
                     state={state}
-                    onEditStep={setStep}
+                    onEdit={() => setStep(0)}
                     termsAccepted={termsAccepted}
                     onToggleTerms={setTermsAccepted}
                     onOpenTermsPanel={() => setShowTermsPanel(true)}
@@ -273,34 +275,32 @@ function ApplicationModalPanel({ tier, onClose }: { tier: MembershipTier; onClos
                     <span aria-hidden="true" />
                   )}
 
-                  {step < STEP_COUNT - 1 ? (
+                  {step === 0 ? (
                     <button
                       type="button"
                       onClick={goNext}
-                      disabled={step === 0 ? !step0Valid : !step1Valid}
+                      disabled={!applicationStepValid}
                       className="inline-flex items-center justify-center rounded-full bg-ink px-7 py-3.5 text-xs uppercase tracking-[0.14em] text-canvas transition-colors duration-300 hover:bg-ink-soft disabled:cursor-not-allowed disabled:bg-stone/40 sm:px-8 sm:py-4"
                     >
-                      {APPLICATION_COPY.nav.next}
+                      {APPLICATION_COPY.applicationStep.reviewCta} →
                     </button>
                   ) : (
-                    <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:justify-end">
+                    <div className="flex flex-col items-center gap-2 sm:items-end">
                       <button
                         type="button"
                         onClick={handleWhatsAppSubmit}
                         disabled={!termsAccepted}
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-7 py-3.5 text-xs uppercase tracking-[0.14em] text-canvas transition-colors duration-300 hover:bg-ink-soft disabled:cursor-not-allowed disabled:bg-stone/40 sm:px-8 sm:py-4"
+                        className="inline-flex items-center justify-center rounded-full bg-ink px-7 py-3.5 text-xs uppercase tracking-[0.14em] text-canvas transition-colors duration-300 hover:bg-ink-soft disabled:cursor-not-allowed disabled:bg-stone/40 sm:px-8 sm:py-4"
                       >
-                        <MessageCircle size={16} aria-hidden="true" />
-                        {APPLICATION_COPY.submit.whatsappLabel}
+                        {APPLICATION_COPY.submit.sendLabel} →
                       </button>
                       <button
                         type="button"
                         onClick={handleEmailSubmit}
                         disabled={!termsAccepted}
-                        className="inline-flex items-center justify-center gap-2 rounded-full border border-ink px-7 py-3.5 text-xs uppercase tracking-[0.14em] text-ink transition-colors duration-300 hover:border-brass hover:text-brass disabled:cursor-not-allowed disabled:border-hairline disabled:text-stone/60 sm:px-8 sm:py-4"
+                        className="text-[0.68rem] uppercase tracking-[0.12em] text-stone transition-colors duration-300 hover:text-brass disabled:cursor-not-allowed disabled:text-stone/40"
                       >
-                        <Mail size={16} aria-hidden="true" />
-                        {APPLICATION_COPY.submit.emailLabel}
+                        {APPLICATION_COPY.submit.emailAlternativeLabel}
                       </button>
                     </div>
                   )}

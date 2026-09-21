@@ -20,6 +20,9 @@ export function FormField({
   options,
   autoComplete,
   className = "",
+  /** Keeps the label for screen readers (a table column header carries it visually instead) and tightens the field's own spacing/size for a compact row. */
+  hideLabel = false,
+  compact = false,
 }: {
   label: string;
   type?: ApplicationFieldType;
@@ -31,15 +34,18 @@ export function FormField({
   options?: string[];
   autoComplete?: string;
   className?: string;
+  hideLabel?: boolean;
+  compact?: boolean;
 }) {
   const id = useId();
   const errorId = `${id}-error`;
-  const fieldClasses =
-    "mt-2 w-full border-0 border-b border-hairline bg-transparent py-2 font-display text-lg text-ink outline-none transition-colors duration-300 focus:border-brass";
+  const fieldClasses = compact
+    ? "w-full border-0 border-b border-hairline bg-transparent py-1.5 font-sans text-sm text-ink outline-none transition-colors duration-300 focus:border-brass"
+    : "mt-2 w-full border-0 border-b border-hairline bg-transparent py-2 font-display text-lg text-ink outline-none transition-colors duration-300 focus:border-brass";
 
   return (
     <div className={className}>
-      <label htmlFor={id} className="block text-[0.68rem] uppercase tracking-[0.14em] text-stone">
+      <label htmlFor={id} className={hideLabel ? "sr-only" : "block text-[0.68rem] uppercase tracking-[0.14em] text-stone"}>
         {label}
         {required && (
           <span className="text-brass" aria-hidden="true">

@@ -3,6 +3,7 @@
 import type { MembershipTier } from "@/content/memberships";
 import { APPLICANT_FIELDS, APPLICATION_COPY } from "@/content/application";
 import { selectedPricingRow } from "@/lib/applicationMessage";
+import { isMemberRowEmpty } from "./validation";
 import type { ApplicationState } from "./types";
 
 const copy = APPLICATION_COPY.reviewStep;
@@ -10,29 +11,32 @@ const copy = APPLICATION_COPY.reviewStep;
 export function StepReview({
   tier,
   state,
-  onEditStep,
+  onEdit,
   termsAccepted,
   onToggleTerms,
   onOpenTermsPanel,
 }: {
   tier: MembershipTier;
   state: ApplicationState;
-  onEditStep: (step: number) => void;
+  onEdit: () => void;
   termsAccepted: boolean;
   onToggleTerms: (value: boolean) => void;
   onOpenTermsPanel: () => void;
 }) {
   const pricing = selectedPricingRow(tier, state);
   const applicantFields = APPLICANT_FIELDS[tier.id];
-  const membershipTitle =
-    tier.id === "family" && state.familyPlanId ? `${tier.title} — ${state.familyPlanId}` : tier.title;
+  const filledMembers = state.members.filter((member) => !isMemberRowEmpty(member));
 
   return (
-    <div className="space-y-8">
-      <section>
-        <SectionHeading label={copy.membershipLabel} onEdit={() => onEditStep(0)} />
-        <p className="mt-3 font-display text-xl">{membershipTitle}</p>
-        <div className="mt-4 flex divide-x divide-hairline bg-sage/50 px-6 py-5 sm:px-8">
+    <div>
+      <p className="text-xs uppercase tracking-[0.16em] text-stone">{copy.title}</p>
+
+      <section className="mt-4">
+        <p className="text-xs uppercase tracking-[0.12em] text-stone">{tier.title}</p>
+        {tier.id === "family" && state.familyPlanId && (
+          <p className="mt-1 font-display text-xl">{state.familyPlanId}</p>
+        )}
+        <div className="mt-3 flex divide-x divide-hairline bg-sage/50 px-6 py-5 sm:px-8">
           <div className="flex-1 pr-4">
             <p className="text-[0.65rem] uppercase tracking-[0.12em] text-stone">
               {copy.contributionLabel}
@@ -48,33 +52,54 @@ export function StepReview({
         </div>
       </section>
 
-      <section>
-        <SectionHeading label={copy.applicantLabel} onEdit={() => onEditStep(0)} />
-        <dl className="mt-3 divide-y divide-hairline border-y border-hairline">
-          {applicantFields.map((field) => (
-            <div key={field.key} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3">
-              <dt className="text-xs uppercase tracking-[0.12em] text-stone">{field.label}</dt>
-              <dd className="text-right text-ink">{state.applicant[field.key] || "—"}</dd>
-            </div>
-          ))}
-        </dl>
+      <section className="mt-8 border-t border-hairline pt-6">
+        <SectionHeading label={copy.detailsLabel} onEdit={onEdit} />
+        <div className="mt-3 space-y-1 text-ink">
+          {applicantFields.map((field) => {
+            const value = state.applicant[field.key];
+            if (!value) return null;
+            return <p key={field.key}>{value}</p>;
+          })}
+        </div>
       </section>
 
-      {state.members.length > 0 && (
-        <section>
-          <SectionHeading label={copy.membersLabel} onEdit={() => onEditStep(1)} />
+      <section className="mt-8 border-t border-hairline pt-6">
+        <div className="flex items-center justify-between">
+          <p className="text-xs uppercase tracking-[0.14em] text-stone">{copy.membersLabel}</p>
+          <div className="flex items-center gap-4">
+            {filledMembers.length > 0 && (
+              <span className="text-[0.68rem] uppercase tracking-[0.12em] text-stone">
+                {filledMembers.length} {filledMembers.length === 1 ? "Member" : "Members"}
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={onEdit}
+              className="text-xs uppercase tracking-[0.14em] text-ink-soft transition-colors hover:text-brass"
+            >
+              {copy.editLabel}
+            </button>
+          </div>
+        </div>
+
+        {filledMembers.length > 0 ? (
           <ul className="mt-3 space-y-2">
-            {state.members.map((member, index) => (
+            {filledMembers.map((member, index) => (
               <li key={member.id} className="flex items-baseline gap-3">
                 <span className="text-xs text-stone">{String(index + 1).padStart(2, "0")}</span>
                 <span>{member.values.name || "—"}</span>
+                {tier.id === "family" && member.values.relationship && (
+                  <span className="text-sm text-stone">{member.values.relationship}</span>
+                )}
               </li>
             ))}
           </ul>
-        </section>
-      )}
+        ) : (
+          <p className="mt-3 text-sm text-stone">No members added.</p>
+        )}
+      </section>
 
-      <label className="flex items-start gap-3 border-t border-hairline pt-6 text-sm text-ink-soft">
+      <label className="mt-8 flex items-start gap-3 border-t border-hairline pt-6 text-sm text-ink-soft">
         <input
           type="checkbox"
           checked={termsAccepted}
