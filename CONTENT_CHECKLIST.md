@@ -96,6 +96,27 @@ to find every location.
   very light wash of that brand's own logo colour
   (`components/sections/TravelPortfolio.tsx`).
 
+### Membership application flow (`content/application.ts`)
+Clicking "Apply for Membership" inside a membership detail modal now opens a
+multi-step application form (`components/application/`) instead of going
+straight to WhatsApp — Your Details → Members → Review, submitted via
+"Send via WhatsApp" or "Send via Email". The membership-specific field sets,
+per-tier additional-member pricing, and step copy are all data-driven from
+this file.
+
+- [ ] `MEMBERSHIP_TERMS_COPY` — **draft placeholder terms, not legal-approved
+  copy.** Generic membership-application boilerplate (eligibility review,
+  contribution/credits, adding members, cancellations) written so the "View
+  Membership Terms & Conditions" panel in the review step has real content to
+  show, not a Lorem-ipsum stand-in. Replace with the client's actual approved
+  terms before launch.
+- [ ] Email submission has no backend/API — "Send via Email" opens the
+  applicant's own email client via a `mailto:` link
+  (`lib/applicationEmail.ts` → `sendApplicationEmail`), pre-filled with the
+  same structured summary sent over WhatsApp. That function is the one place
+  to swap in a real email/API integration later; every call site already
+  awaits it.
+
 ### Domain
 `app/sitemap.ts` and `app/robots.ts` use a placeholder domain
 (`handcarvedhorizons.com`) — update once the production domain is confirmed.

@@ -7,7 +7,8 @@ import { MembershipCarousel } from "./MembershipCarousel";
 import { MembershipDetailModal } from "./MembershipDetailModal";
 import { MembershipCTA } from "./MembershipCTA";
 import { FirstCircleAdvantage } from "./FirstCircleAdvantage";
-import { MEMBERSHIP_TIERS, MEMBERSHIP_SECTION_COPY } from "@/content/memberships";
+import { ApplicationModal } from "../application/ApplicationModal";
+import { MEMBERSHIP_TIERS, MEMBERSHIP_SECTION_COPY, type MembershipTier } from "@/content/memberships";
 
 /**
  * The single membership section rendered on both the home page and
@@ -17,6 +18,15 @@ import { MEMBERSHIP_TIERS, MEMBERSHIP_SECTION_COPY } from "@/content/memberships
 export function MembershipSection() {
   const [openTierId, setOpenTierId] = useState<string | null>(null);
   const openTier = MEMBERSHIP_TIERS.find((tier) => tier.id === openTierId) ?? null;
+
+  const [applicationTier, setApplicationTier] = useState<MembershipTier | null>(null);
+
+  function handleApply(tier: MembershipTier) {
+    // Close the detail popup and open the application flow in its place,
+    // rather than stacking one modal on top of the other.
+    setOpenTierId(null);
+    setApplicationTier(tier);
+  }
 
   // Force the break after "Circles." so the headline reads as two balanced
   // lines ("Three Circles." / "One Community.") instead of wrapping wherever
@@ -48,7 +58,8 @@ export function MembershipSection() {
         <MembershipCTA />
       </Container>
 
-      <MembershipDetailModal tier={openTier} onClose={() => setOpenTierId(null)} />
+      <MembershipDetailModal tier={openTier} onClose={() => setOpenTierId(null)} onApply={handleApply} />
+      <ApplicationModal tier={applicationTier} onClose={() => setApplicationTier(null)} />
     </section>
   );
 }

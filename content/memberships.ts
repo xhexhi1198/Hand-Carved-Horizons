@@ -20,8 +20,10 @@ export interface MembershipPhotography {
   src?: string;
 }
 
+export type MembershipTierId = "family" | "friendsCircle" | "student";
+
 export interface MembershipTier {
-  id: "family" | "friendsCircle" | "student";
+  id: MembershipTierId;
   title: string;
   /** The tier's name as used in the pre-filled WhatsApp "Apply" message, e.g. "Friends Circle Membership" (the card title alone, "Friends Circle", reads awkwardly mid-sentence). */
   whatsappName: string;
@@ -160,14 +162,12 @@ export const MEMBERSHIP_PRICING_NOTE =
   "Travel credits are redeemable against eligible travel services and experiences as per membership terms and conditions.";
 
 // FINAL — client-approved. The membership-specific "Apply for Membership"
-// CTA at the foot of every detail modal — the one CTA on the site whose
-// WhatsApp message names the tier. The "{membership}" token is replaced
-// with the open tier's `whatsappName`. Its "WhatsApp Us" sibling CTA reuses
-// the site-wide generic message (content/site.ts → CONTACT_INFO.whatsappDefaultMessage).
+// CTA at the foot of every detail modal — opens the multi-step application
+// flow (components/application/ApplicationModal.tsx) for that tier. Its
+// "WhatsApp Us" sibling CTA still goes straight to WhatsApp with the
+// site-wide generic message (content/site.ts → CONTACT_INFO.whatsappDefaultMessage).
 export const MEMBERSHIP_MODAL_CTA_COPY = {
   applyLabel: "Apply for Membership",
-  applyMessageTemplate:
-    "Hi, I'm interested in applying for the {membership} at Hand-Carved Horizons. Please share the next steps.",
 };
 
 // FINAL — client-approved. Previously the closing panel of the "Our First

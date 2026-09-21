@@ -23,9 +23,12 @@ import { buildWhatsAppHref } from "@/lib/whatsapp";
 export function MembershipDetailModal({
   tier,
   onClose,
+  onApply,
 }: {
   tier: MembershipTier | null;
   onClose: () => void;
+  /** Opens the multi-step application flow for this tier (MembershipSection closes this modal first). */
+  onApply: (tier: MembershipTier) => void;
 }) {
   const shouldReduceMotion = useReducedMotion();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -123,18 +126,13 @@ export function MembershipDetailModal({
               </div>
 
               <div className="mt-6 flex flex-wrap items-center gap-4 border-t border-hairline pt-6">
-                <Button
-                  href={buildWhatsAppHref(
-                    MEMBERSHIP_MODAL_CTA_COPY.applyMessageTemplate.replace(
-                      "{membership}",
-                      tier.whatsappName
-                    )
-                  )}
-                  external
-                  icon={<MessageCircle size={16} />}
+                <button
+                  type="button"
+                  onClick={() => onApply(tier)}
+                  className="inline-flex items-center gap-2 rounded-full bg-ink px-7 py-4 text-xs uppercase tracking-[0.14em] text-canvas transition-colors duration-300 hover:bg-ink-soft"
                 >
                   {MEMBERSHIP_MODAL_CTA_COPY.applyLabel}
-                </Button>
+                </button>
                 <Button
                   href={buildWhatsAppHref()}
                   external
