@@ -210,8 +210,12 @@ function ApplicationModalPanel({ tier, onClose }: { tier: MembershipTier; onClos
             </div>
           ) : (
             <>
-              <div className="shrink-0 border-b border-hairline px-6 pt-6 sm:px-10 sm:pt-8">
-                <p className="pr-10 text-center text-xs uppercase tracking-[0.16em] text-stone">
+              <div className="shrink-0 border-b border-hairline px-12 pt-6 sm:px-16 sm:pt-8">
+                {/* Symmetric padding (not a one-sided pr-* squeeze) keeps
+                    the eyebrow and title on the same true center axis —
+                    the close button just happens to sit inside that
+                    margin, independent of the heading's own centering. */}
+                <p className="text-center text-xs uppercase tracking-[0.16em] text-stone">
                   {APPLICATION_COPY.eyebrow}
                 </p>
                 <h2
