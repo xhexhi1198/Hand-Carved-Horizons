@@ -289,14 +289,14 @@ function ApplicationModalPanel({ tier, onClose }: { tier: MembershipTier; onClos
                       {APPLICATION_COPY.applicationStep.reviewCta} →
                     </button>
                   ) : (
-                    <div className="flex flex-col items-center gap-2 sm:items-end">
+                    <div className="flex flex-col items-center gap-2 sm:flex-row sm:items-center sm:gap-7">
                       <button
                         type="button"
                         onClick={handleWhatsAppSubmit}
                         disabled={!termsAccepted}
                         className="inline-flex items-center justify-center rounded-full bg-ink px-7 py-3.5 text-xs uppercase tracking-[0.14em] text-canvas transition-colors duration-300 hover:bg-ink-soft disabled:cursor-not-allowed disabled:bg-stone/40 sm:px-8 sm:py-4"
                       >
-                        {APPLICATION_COPY.submit.sendLabel} →
+                        {APPLICATION_COPY.submit.sendLabel}
                       </button>
                       <button
                         type="button"

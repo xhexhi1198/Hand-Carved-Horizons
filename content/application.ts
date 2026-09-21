@@ -119,7 +119,7 @@ export const APPLICATION_COPY = {
     termsLinkLabel: "Membership Terms & Conditions",
   },
   submit: {
-    sendLabel: "Send Application",
+    sendLabel: "Send via WhatsApp",
     emailAlternativeLabel: "Prefer email instead",
   },
   nav: {
