@@ -10,7 +10,8 @@ export const HERO_COPY = {
   headlineLines: ["Some journeys", "aren't booked.", "They're carved."],
   subhead:
     "Hand Carved Horizons is a private circle for those who believe a journey is measured by who you shared it with.",
-  primaryCta: "Apply for Membership",
+  primaryCta: "Explore Membership",
+  secondaryCta: "Our Philosophy",
   scrollHint: "Scroll to begin",
 };
 

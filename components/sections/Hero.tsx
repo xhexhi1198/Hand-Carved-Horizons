@@ -7,7 +7,7 @@ import { Container } from "../ui/Container";
 import { TextMask } from "../ui/TextMask";
 import { Button } from "../ui/Button";
 import { HERO_COPY } from "@/content/home";
-import { buildWhatsAppHref } from "@/lib/whatsapp";
+import { scrollToHashOnClick } from "@/lib/scrollToHash";
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -59,13 +59,22 @@ export function Hero() {
 
         <p className="mt-8 max-w-md text-base text-canvas/85 sm:text-lg">{HERO_COPY.subhead}</p>
 
-        <div className="mt-10 flex flex-wrap items-center gap-6">
+        <div className="mt-10 flex flex-nowrap items-center gap-2 sm:gap-4">
+          {/* Slightly tighter tracking + padding on mobile only, so both
+              CTAs stay on one row without wrapping — text size is untouched. */}
           <Button
-            href={buildWhatsAppHref()}
-            external
-            className="!bg-canvas !text-ink hover:!bg-canvas/90"
+            href="/#memberships"
+            onClick={scrollToHashOnClick("/#memberships")}
+            className="!bg-canvas !px-3 !py-3 !tracking-[0.08em] !text-ink hover:!bg-canvas/90 sm:!px-7 sm:!py-4 sm:!tracking-[0.14em]"
           >
             {HERO_COPY.primaryCta}
+          </Button>
+          <Button
+            href="/#philosophy"
+            onClick={scrollToHashOnClick("/#philosophy")}
+            className="border border-canvas/70 !bg-transparent !px-2.5 !py-3 !tracking-[0.08em] !text-canvas hover:!border-canvas hover:!bg-canvas/10 sm:!px-7 sm:!py-4 sm:!tracking-[0.14em]"
+          >
+            {HERO_COPY.secondaryCta}
           </Button>
         </div>
       </Container>
